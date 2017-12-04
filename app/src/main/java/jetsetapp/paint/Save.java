@@ -1,13 +1,10 @@
 package jetsetapp.paint;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -18,8 +15,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import static android.R.attr.path;
-
 
 public class Save {
 
@@ -27,6 +22,29 @@ public class Save {
     private static String NameOfFolder = "/KidsPaint";
     private static String NameOfFile = "KidsPaint";
 
+    private static void UnableToSave() {
+
+
+        Toast.makeText(TheThis, "Picture failed to save", Toast.LENGTH_SHORT).
+
+                show();
+    }
+
+    private static void AbleToSave() {
+
+        Toast.makeText(TheThis, "Picture saved to Gallery", Toast.LENGTH_SHORT).
+
+                show();
+    }
+
+    private static void UnableToSaveIO() {
+
+        Toast.makeText(TheThis, "Picture failed to save - IO exception", Toast.LENGTH_SHORT).
+
+                show();
+    }
+
+    //hoi
     public void SaveImage(Context context, Bitmap ImageToSave) {
         TheThis = context;
         String file_path = Environment.getExternalStorageDirectory().getAbsolutePath() + NameOfFolder;
@@ -62,28 +80,6 @@ public class Save {
         } catch (IOException e) {
             UnableToSaveIO();
         }
-    }
-
-    private static void UnableToSave() {
-
-
-        Toast.makeText(TheThis, "Picture failed to save", Toast.LENGTH_SHORT).
-
-                show();
-    }
-
-    private static void AbleToSave() {
-
-        Toast.makeText(TheThis, "Picture saved to Gallery", Toast.LENGTH_SHORT).
-
-                show();
-    }
-
-    private static void UnableToSaveIO() {
-
-        Toast.makeText(TheThis, "Picture failed to save - IO exception", Toast.LENGTH_SHORT).
-
-                show();
     }
 
     private String getCurrentDateAndTime() {
