@@ -5,122 +5,134 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#ffffff"
     tools:context="jetsetapp.paint.MainActivity">
 
 
     <jetsetapp.paint.CanvasView
         android:id="@+id/canvas"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-
-    <ImageButton
-        app:srcCompat="@drawable/yellow_splash2"
-        android:id="@+id/imageButtonYellow"
-        style="@style/colorButton"
-        android:background="@drawable/yellow_splash2"
-        android:onClick="setColorYellow"
-        android:layout_alignRight="@+id/canvas"
-        android:layout_alignParentBottom="false"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="false"
-        android:layout_alignWithParentIfMissing="false"
-        android:layout_alignParentRight="false" />
-
-    <ImageButton
-        app:srcCompat="@drawable/blue_splash2"
-        android:id="@+id/imageButtonBlue"
-        style="@style/colorButton"
-        android:background="@drawable/blue_splash2"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/imageButtonYellow"
-        android:layout_toStartOf="@+id/imageButtonYellow"
-        android:onClick="setColorBlue"/>
-
-    <ImageButton
-        app:srcCompat="@drawable/red_splash2"
-        android:id="@+id/imageButtonRed"
-        style="@style/colorButton"
-        android:background="@drawable/red_splash2"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/imageButtonBlue"
-        android:layout_toStartOf="@+id/imageButtonBlue"
-        android:onClick="setColorRed"/>
-
-    <ImageButton
-        app:srcCompat="@drawable/paint_splash2"
-        android:id="@+id/imageButtonPurple"
-        style="@style/colorButton"
-        android:background="@drawable/paint_splash2"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/imageButtonRed"
-        android:layout_toStartOf="@+id/imageButtonRed"
-        android:onClick="setColorPink"/>
-
-    <ImageButton
-        app:srcCompat="@drawable/green_splash2"
-        android:id="@+id/imageButtonGreen"
-        style="@style/colorButton"
-        android:background="@drawable/green_splash2"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/imageButtonPurple"
-        android:layout_toStartOf="@+id/imageButtonPurple"
-        android:onClick="setColorGreen"/>
-
-    <ImageButton
-        app:srcCompat="@drawable/brown_splash"
-        android:id="@+id/imageButtonBrown"
-        style="@style/colorButton"
-        android:background="@drawable/brown_splash"
-        android:onClick="setColorBrown"
-        android:layout_toLeftOf="@+id/imageButtonGreen"
-        android:layout_toStartOf="@+id/imageButtonGreen"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true" />
 
-    <ImageButton
-        app:srcCompat="@drawable/black_splash"
-        android:id="@+id/imageButtonBlack"
-        style="@style/colorButton"
-        android:background="@drawable/black_splash"
-        android:onClick="setColorBlack"
-        android:layout_toLeftOf="@+id/imageButtonBrown"
-        android:layout_toStartOf="@+id/imageButtonBrown"
-        android:layout_alignParentTop="true" />
 
     <ImageButton
-        app:srcCompat="@drawable/undo"
+        android:id="@+id/undoButton"
+        style="@style/undoButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:id="@+id/undoButton"
-        android:visibility="invisible"
         android:onClick="undo"
-        style="@style/undoButton" />
+        android:visibility="invisible"
+        app:srcCompat="@drawable/undo" />
 
     <ImageButton
-        app:srcCompat="@drawable/redo"
+        android:id="@+id/redoButton"
+        style="@style/undoButton"
         android:layout_alignTop="@+id/undoButton"
         android:layout_toRightOf="@+id/undoButton"
-        android:id="@+id/redoButton"
         android:onClick="redo"
         android:visibility="invisible"
-        style="@style/undoButton" />
+        app:srcCompat="@drawable/redo" />
 
     <ImageButton
-        app:srcCompat="@drawable/trash"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="clearCanvas"
         android:id="@+id/clear"
-        style="@style/undoButton" />
+        style="@style/undoButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:onClick="clearCanvas"
+        app:srcCompat="@drawable/trash" />
+
+    <HorizontalScrollView
+        android:id="@+id/HorizontalScroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/imageButtonYellow"
+                style="@style/colorButton"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentRight="false"
+                android:layout_alignParentStart="false"
+                android:layout_alignRight="@+id/canvas"
+                android:layout_alignWithParentIfMissing="false"
+                android:background="@drawable/yellow_splash2"
+                android:onClick="setColorYellow"
+                app:srcCompat="@drawable/yellow_splash2" />
+
+            <ImageButton
+                android:id="@+id/imageButtonBlue"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonYellow"
+                android:layout_toStartOf="@+id/imageButtonYellow"
+                android:background="@drawable/blue_splash2"
+                android:onClick="setColorBlue"
+                app:srcCompat="@drawable/blue_splash2" />
+
+            <ImageButton
+                android:id="@+id/imageButtonRed"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonBlue"
+                android:layout_toStartOf="@+id/imageButtonBlue"
+                android:background="@drawable/red_splash2"
+                android:onClick="setColorRed"
+                app:srcCompat="@drawable/red_splash2" />
+
+            <ImageButton
+                android:id="@+id/imageButtonPurple"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonRed"
+                android:layout_toStartOf="@+id/imageButtonRed"
+                android:background="@drawable/paint_splash2"
+                android:onClick="setColorPink"
+                app:srcCompat="@drawable/paint_splash2" />
+
+            <ImageButton
+                android:id="@+id/imageButtonGreen"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonPurple"
+                android:layout_toStartOf="@+id/imageButtonPurple"
+                android:background="@drawable/green_splash2"
+                android:onClick="setColorGreen"
+                app:srcCompat="@drawable/green_splash2" />
+
+            <ImageButton
+                android:id="@+id/imageButtonBrown"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonGreen"
+                android:layout_toStartOf="@+id/imageButtonGreen"
+                android:background="@drawable/brown_splash"
+                android:onClick="setColorBrown"
+                app:srcCompat="@drawable/brown_splash" />
+
+            <ImageButton
+                android:id="@+id/imageButtonBlack"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonBrown"
+                android:layout_toStartOf="@+id/imageButtonBrown"
+                android:background="@drawable/black_splash"
+                android:onClick="setColorBlack"
+                app:srcCompat="@drawable/black_splash" />
+        </LinearLayout>
+    </HorizontalScrollView>
 
 
 </RelativeLayout>
