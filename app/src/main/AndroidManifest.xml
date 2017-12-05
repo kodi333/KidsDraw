@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="jetsetapp.paint">
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="23" />
 
 
@@ -14,7 +14,8 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".MainActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden">
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:hardwareAccelerated="false">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

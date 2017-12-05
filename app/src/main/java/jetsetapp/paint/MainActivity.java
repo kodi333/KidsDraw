@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         canvasView = (CanvasView) findViewById(R.id.canvas);
         canvasView.setDrawingCacheEnabled(true);
+
         undoButton = (ImageButton)findViewById(R.id.undoButton);
         redoButton = (ImageButton)findViewById(R.id.redoButton);
 
@@ -48,6 +49,12 @@ public class MainActivity extends AppCompatActivity {
 
         horizontalPaintsView = (HorizontalScrollView) findViewById(R.id.HorizontalScroll);
         horizontalPaintsView.setHorizontalScrollBarEnabled(false);
+
+        // Disable hardware acceleration for shadow color o work
+
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+//            canvasView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+//        }
 
     }
 
@@ -172,10 +179,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void setGlow(View v) {
 //        BlurMaskFilter blur = new BlurMaskFilter(15, BlurMaskFilter.Blur.NORMAL);
+        canvasView.paint.setShadowLayer(50, 0, 0, Color.rgb(100, 255, 255));
         canvasView.changeColor(Color.rgb(255, 255, 255));
         //canvasView.paint.setMaskFilter(blur);
         //canvasView.paint.setStyle(Paint.Style.FILL);
-        canvasView.paint.setShadowLayer(60, 0, 0, Color.RED);
+
     }
     public void setColorWhite(){
         canvasView.changeColor(Color.rgb(255,255,255));

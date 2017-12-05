@@ -2,6 +2,7 @@ package jetsetapp.paint;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -20,6 +21,7 @@ public class CanvasView extends View {
 
     private static final float TOLERANCE = 5;
     protected Paint paint = new Paint();
+    protected Paint _paintBlur = new Paint();
     Context context;
     FileOutputStream fos = null;
     View undoButton;
@@ -29,8 +31,8 @@ public class CanvasView extends View {
     private ArrayList<Path> undonePaths = new ArrayList<Path>();
     private ArrayList<Integer> undoneColors = new ArrayList<Integer>();
     private ArrayList<Float> undoneStrokes = new ArrayList<Float>();
-    private int currentColor = Color.BLACK;
-    private float currentStroke = 4F;
+    private int currentColor = Color.WHITE; // was black
+    private float currentStroke = 10F;
     private Bitmap mBitmap;
     private Canvas canvas;
     private Path path = new Path();
@@ -46,13 +48,22 @@ public class CanvasView extends View {
         setFocusable(true);
         setFocusableInTouchMode(true);
 
+        //setLayerType(LAYER_TYPE_SOFTWARE, paint);
+
         paint.setAntiAlias(true);
         paint.setDither(true);
-        paint.setColor(Color.BLACK); // BLACK
+        paint.setColor(Color.WHITE); // BLACK
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setStrokeWidth(currentStroke);
+
+        _paintBlur = new Paint();
+        _paintBlur.set(paint);
+        _paintBlur.setColor((Color.rgb(249, 80, 75)));
+        _paintBlur.setStrokeWidth(currentStroke + 10F);
+        //_paintBlur.setShadowLayer(50,0,0,(Color.rgb(249, 80, 75)));
+        _paintBlur.setMaskFilter(new BlurMaskFilter(15, BlurMaskFilter.Blur.NORMAL));
 
     }
 
@@ -99,7 +110,7 @@ public class CanvasView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawARGB(255,255,255,255);
+        canvas.drawARGB(255, 0, 0, 0);
         for (int x = 0; x < paths.size(); x++) {
             paint.setColor(colors.get(x));
             paint.setStrokeWidth(strokes.get(x));
@@ -107,7 +118,10 @@ public class CanvasView extends View {
         }
         paint.setColor(currentColor);
         paint.setStrokeWidth(currentStroke);
+        canvas.drawPath(path, _paintBlur);
         canvas.drawPath(path, paint);
+
+
     }
 
     private void startTouch(float x, float y) {
