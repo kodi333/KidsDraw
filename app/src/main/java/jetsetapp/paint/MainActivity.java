@@ -1,36 +1,34 @@
 package jetsetapp.paint;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 
 import java.io.FileOutputStream;
 
 public class MainActivity extends AppCompatActivity {
 
-    private CanvasView canvasView;
-
+    protected static ImageButton undoButton;
+    protected static ImageButton redoButton;
     FileOutputStream fos = null;
+    int lastChosenColor = Color.BLACK;
+    private CanvasView canvasView;
     private Bitmap saveBitMap;
     private Canvas saveCanvas;
     private View view;
     private Bitmap mBitmap;
-    int lastChosenColor = Color.BLACK;
-    public static ImageButton undoButton;
-    public static ImageButton redoButton;
+    private HorizontalScrollView horizontalPaintsView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +39,15 @@ public class MainActivity extends AppCompatActivity {
         canvasView.setDrawingCacheEnabled(true);
         undoButton = (ImageButton)findViewById(R.id.undoButton);
         redoButton = (ImageButton)findViewById(R.id.redoButton);
+
+        // Hide app name in action bar
+
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        // Hide scrollbar in buttons Scroll View
+
+        horizontalPaintsView = (HorizontalScrollView) findViewById(R.id.HorizontalScroll);
+        horizontalPaintsView.setHorizontalScrollBarEnabled(false);
 
     }
 
@@ -156,6 +163,19 @@ public class MainActivity extends AppCompatActivity {
     public void setColorPink(View v){
         canvasView.changeColor(Color.rgb(255,0,255));
         lastChosenColor = Color.rgb(255,0,255);
+    }
+
+    public void setColorMagenta(View v) {
+        canvasView.changeColor(Color.rgb(100, 255, 255));
+        lastChosenColor = Color.rgb(100, 255, 255);
+    }
+
+    public void setGlow(View v) {
+//        BlurMaskFilter blur = new BlurMaskFilter(15, BlurMaskFilter.Blur.NORMAL);
+        canvasView.changeColor(Color.rgb(255, 255, 255));
+        //canvasView.paint.setMaskFilter(blur);
+        //canvasView.paint.setStyle(Paint.Style.FILL);
+        canvasView.paint.setShadowLayer(60, 0, 0, Color.RED);
     }
     public void setColorWhite(){
         canvasView.changeColor(Color.rgb(255,255,255));

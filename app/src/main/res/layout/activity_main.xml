@@ -131,6 +131,16 @@
                 android:background="@drawable/black_splash"
                 android:onClick="setColorBlack"
                 app:srcCompat="@drawable/black_splash" />
+
+            <ImageButton
+                android:id="@+id/imageButtonMagenta"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonBlack"
+                android:layout_toStartOf="@+id/imageButtonBlack"
+                android:background="@drawable/red_glow_splash"
+                android:onClick="setGlow"
+                app:srcCompat="@drawable/red_glow_splash" />
         </LinearLayout>
     </HorizontalScrollView>
 

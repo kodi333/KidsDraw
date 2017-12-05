@@ -6,24 +6,23 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.os.Bundle;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewStub;
-import android.widget.Button;
 
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.bitmap;
-import static jetsetapp.paint.R.id.canvas;
-
 
 public class CanvasView extends View {
 
+    private static final float TOLERANCE = 5;
+    protected Paint paint = new Paint();
+    Context context;
+    FileOutputStream fos = null;
+    View undoButton;
     private List<Path> paths = new ArrayList<Path>();
     private List<Integer> colors = new ArrayList<Integer>();
     private List<Float> strokes = new ArrayList<Float>();
@@ -32,18 +31,12 @@ public class CanvasView extends View {
     private ArrayList<Float> undoneStrokes = new ArrayList<Float>();
     private int currentColor = Color.BLACK;
     private float currentStroke = 4F;
-
     private Bitmap mBitmap;
     private Canvas canvas;
     private Path path = new Path();
-    private Paint paint = new Paint();
     private float mX;
     private float mY;
-    private static final float TOLERANCE = 5;
-    Context context;
-    FileOutputStream fos = null;
     private ViewStub view;
-    View undoButton;
 
 
     public CanvasView(Context context, AttributeSet attrs) {
@@ -54,11 +47,12 @@ public class CanvasView extends View {
         setFocusableInTouchMode(true);
 
         paint.setAntiAlias(true);
-        paint.setColor(Color.BLACK);
+        paint.setDither(true);
+        paint.setColor(Color.BLACK); // BLACK
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
+        paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setStrokeWidth(currentStroke);
-
 
     }
 
@@ -86,15 +80,16 @@ public class CanvasView extends View {
         path = new Path();
     }
 
+
     public int getColor() {
         int color = currentColor;
        return color;
     }
 
-    public int getPathsSize(){
-        int size = paths.size();
-        return size;
-    }
+//    public int getPathsSize(){
+//        int size = paths.size();
+//        return size;
+//    }
 
     public void changeStroke(float size) {
         currentStroke = size;
