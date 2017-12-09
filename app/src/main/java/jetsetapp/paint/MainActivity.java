@@ -1,16 +1,12 @@
 package jetsetapp.paint;
 
-import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
@@ -43,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Hide app name in action bar
 
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // Hide scrollbar in buttons Scroll View
 
@@ -64,66 +60,66 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // handle button activities
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.drawBigbutton) {
-            canvasView.changeStroke(20F);
-            int whiteColorValue = Color.WHITE;
-            if(canvasView.getColor() == whiteColorValue){
-                int lastColor = lastChosenColor;
-                canvasView.changeColor(lastColor);
-            }
-        }
-
-        if (id == R.id.drawSmallbutton) {
-            canvasView.changeStroke(4F);
-            int whiteColorValue = Color.WHITE;
-            if(canvasView.getColor() == whiteColorValue){
-                int lastColor = lastChosenColor;
-                canvasView.changeColor(lastColor);
-            }
-        }
-
-        if (id == R.id.drawRoller) {
-            canvasView.changeStroke(60F);
-            int whiteColorValue = Color.WHITE;
-            if(canvasView.getColor() == whiteColorValue){
-                int lastColor = lastChosenColor;
-                canvasView.changeColor(lastColor);
-            }
-        }
-
-        if (id == R.id.erase) {
-            setColorWhite();
-        }
-
-        if (id == R.id.saveFile) {
-
-            canvasView.buildDrawingCache();
-            mBitmap = Bitmap.createBitmap(canvasView.getDrawingCache());
-            Save savefile = new Save();
-
-            if (Build.VERSION.SDK_INT >= 23) {
-                if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        == PackageManager.PERMISSION_GRANTED) {
-                    savefile.SaveImage(this,mBitmap);
-                } else {
-
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-//                    return false;
-                }
-            }
-            else { //permission is automatically granted on sdk<23 upon installation
-                savefile.SaveImage(this,mBitmap);
-            }
-
-            canvasView.destroyDrawingCache();
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//
+//        if (id == R.id.drawBigbutton) {
+//            canvasView.changeStroke(20F);
+//            int whiteColorValue = Color.WHITE;
+//            if(canvasView.getColor() == whiteColorValue){
+//                int lastColor = lastChosenColor;
+//                canvasView.changeColor(lastColor);
+//            }
+//        }
+//
+//        if (id == R.id.drawSmallbutton) {
+//            canvasView.changeStroke(4F);
+//            int whiteColorValue = Color.WHITE;
+//            if(canvasView.getColor() == whiteColorValue){
+//                int lastColor = lastChosenColor;
+//                canvasView.changeColor(lastColor);
+//            }
+//        }
+//
+//        if (id == R.id.drawRoller) {
+//            canvasView.changeStroke(60F);
+//            int whiteColorValue = Color.WHITE;
+//            if(canvasView.getColor() == whiteColorValue){
+//                int lastColor = lastChosenColor;
+//                canvasView.changeColor(lastColor);
+//            }
+//        }
+//
+//        if (id == R.id.erase) {
+//            setColorWhite();
+//        }
+//
+//        if (id == R.id.saveFile) {
+//
+//            canvasView.buildDrawingCache();
+//            mBitmap = Bitmap.createBitmap(canvasView.getDrawingCache());
+//            Save savefile = new Save();
+//
+//            if (Build.VERSION.SDK_INT >= 23) {
+//                if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                        == PackageManager.PERMISSION_GRANTED) {
+//                    savefile.SaveImage(this,mBitmap);
+//                } else {
+//
+//                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+////                    return false;
+//                }
+//            }
+//            else { //permission is automatically granted on sdk<23 upon installation
+//                savefile.SaveImage(this,mBitmap);
+//            }
+//
+//            canvasView.destroyDrawingCache();
+//
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
