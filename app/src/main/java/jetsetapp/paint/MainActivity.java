@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
+import android.widget.Switch;
 
 import java.io.FileOutputStream;
 
@@ -17,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected static ImageButton undoButton;
     protected static ImageButton redoButton;
+    private static Boolean setGlow;
     FileOutputStream fos = null;
     int lastChosenColor = Color.BLACK;
     private CanvasView canvasView;
@@ -25,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
     private View view;
     private Bitmap mBitmap;
     private HorizontalScrollView horizontalPaintsView;
+
+    public static Boolean getSetGlow() {
+        return setGlow;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +43,19 @@ public class MainActivity extends AppCompatActivity {
 
         undoButton = (ImageButton)findViewById(R.id.undoButton);
         redoButton = (ImageButton)findViewById(R.id.redoButton);
+
+        // initiate a Switch
+        Switch glowSwitch = (Switch) findViewById(R.id.glow_switch);
+
+        glowSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    canvasView.setBackgroundColor(Color.BLACK);
+                else
+                    canvasView.setBackgroundColor(Color.WHITE);
+            }
+        });
 
         // Hide app name in action bar
 
@@ -134,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
             //resume tasks needing this permission
         }
     }
+
 
     public void clearCanvas(View v){
         canvasView.clearCanvas();

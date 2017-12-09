@@ -110,7 +110,15 @@ public class CanvasView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawARGB(255, 0, 0, 0);
+//        if(MainActivity.getSetGlow()) {
+//            canvas.drawARGB(255, 0, 0, 0);
+//            invalidate();
+//        }
+//        else {
+//            canvas.drawARGB(255, 255, 255, 255);
+//            invalidate();
+//        }
+
         for (int x = 0; x < paths.size(); x++) {
             paint.setColor(colors.get(x));
             paint.setStrokeWidth(strokes.get(x));
