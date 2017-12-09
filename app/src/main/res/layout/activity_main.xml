@@ -63,6 +63,8 @@
         <ImageButton
             android:id="@+id/erase"
             style="@style/colorButton"
+            android:layout_toLeftOf="@+id/drawSmallbutton"
+            android:layout_toStartOf="@+id/drawSmallbutton"
             android:onClick="undo"
             android:scaleType="fitStart"
             app:srcCompat="@drawable/erase" />
@@ -70,6 +72,8 @@
         <ImageButton
             android:id="@+id/drawSmallbutton"
             style="@style/colorButton"
+            android:layout_toLeftOf="@+id/drawBigbutton"
+            android:layout_toStartOf="@+id/drawBigbutton"
             android:onClick="undo"
             android:scaleType="fitStart"
             app:srcCompat="@drawable/pencil" />
@@ -77,6 +81,8 @@
         <ImageButton
             android:id="@+id/drawBigbutton"
             style="@style/colorButton"
+            android:layout_toLeftOf="@+id/drawRoller"
+            android:layout_toStartOf="@+id/drawRoller"
             android:onClick="undo"
             android:scaleType="fitStart"
             app:srcCompat="@drawable/marker2" />
@@ -84,6 +90,8 @@
         <ImageButton
             android:id="@+id/drawRoller"
             style="@style/colorButton"
+            android:layout_toLeftOf="@+id/saveFile"
+            android:layout_toStartOf="@+id/saveFile"
             android:onClick="undo"
             android:scaleType="fitStart"
             app:srcCompat="@drawable/roll" />
@@ -96,6 +104,7 @@
             android:onClick="undo"
             android:scaleType="fitStart"
             app:srcCompat="@drawable/save" />
+
 
     </RelativeLayout>
 
