@@ -22,7 +22,6 @@
         android:layout_alignParentTop="true"
         android:background="#ffffff" />
 
-
     <ImageButton
         android:id="@+id/undoButton"
         style="@style/undoButton"
@@ -50,10 +49,64 @@
         android:onClick="clearCanvas"
         app:srcCompat="@drawable/trash" />
 
+    <RelativeLayout
+        android:id="@+id/top_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentRight="false"
+        android:gravity="top"
+        android:orientation="horizontal">
+
+
+        <ImageButton
+            android:id="@+id/erase"
+            style="@style/colorButton"
+            android:onClick="undo"
+            android:scaleType="fitStart"
+            app:srcCompat="@drawable/erase" />
+
+        <ImageButton
+            android:id="@+id/drawSmallbutton"
+            style="@style/colorButton"
+            android:onClick="undo"
+            android:scaleType="fitStart"
+            app:srcCompat="@drawable/pencil" />
+
+        <ImageButton
+            android:id="@+id/drawBigbutton"
+            style="@style/colorButton"
+            android:onClick="undo"
+            android:scaleType="fitStart"
+            app:srcCompat="@drawable/marker2" />
+
+        <ImageButton
+            android:id="@+id/drawRoller"
+            style="@style/colorButton"
+            android:onClick="undo"
+            android:scaleType="fitStart"
+            app:srcCompat="@drawable/roll" />
+
+        <ImageButton
+            android:id="@+id/saveFile"
+            style="@style/colorButton"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:onClick="undo"
+            android:scaleType="fitStart"
+            app:srcCompat="@drawable/save" />
+
+    </RelativeLayout>
+
     <HorizontalScrollView
         android:id="@+id/HorizontalScroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="69dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
