@@ -31,7 +31,7 @@ public class CanvasView extends View {
     private ArrayList<Path> undonePaths = new ArrayList<Path>();
     private ArrayList<Integer> undoneColors = new ArrayList<Integer>();
     private ArrayList<Float> undoneStrokes = new ArrayList<Float>();
-    private int currentColor = Color.WHITE; // was black
+    private int currentColor = Color.BLACK; // was black
     private float currentStroke = 10F;
     private Bitmap mBitmap;
     private Canvas canvas;
@@ -52,7 +52,7 @@ public class CanvasView extends View {
 
         paint.setAntiAlias(true);
         paint.setDither(true);
-        paint.setColor(Color.WHITE); // BLACK
+        paint.setColor(Color.BLACK); // BLACK
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.ROUND);
