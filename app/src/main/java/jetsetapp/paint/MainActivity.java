@@ -8,10 +8,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
-import android.widget.Switch;
 
 import java.io.FileOutputStream;
 
@@ -43,19 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
         undoButton = (ImageButton)findViewById(R.id.undoButton);
         redoButton = (ImageButton)findViewById(R.id.redoButton);
-
-        // initiate a Switch
-        Switch glowSwitch = (Switch) findViewById(R.id.glow_switch);
-
-        glowSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
-                    canvasView.setBackgroundColor(Color.BLACK);
-                else
-                    canvasView.setBackgroundColor(Color.WHITE);
-            }
-        });
 
         // Hide app name in action bar
 

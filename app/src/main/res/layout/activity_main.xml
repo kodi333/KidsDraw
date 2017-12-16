@@ -59,15 +59,6 @@
         android:gravity="top"
         android:orientation="horizontal">
 
-        <Switch
-            android:id="@+id/glow_switch"
-            style="@style/switchStyle"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/erase"
-            android:text="" />
-
         <ImageButton
             android:id="@+id/erase"
             style="@style/colorButton"
