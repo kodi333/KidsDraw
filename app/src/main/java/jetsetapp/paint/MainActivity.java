@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     private View view;
     private Bitmap mBitmap;
     private HorizontalScrollView horizontalPaintsView;
-    private Resources res;
 
 
     public static Boolean getSetGlow() {
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Resources res = getApplicationContext().getResources();
+
         canvasView = (CanvasView) findViewById(R.id.canvas);
         canvasView.setDrawingCacheEnabled(true);
 
@@ -111,49 +110,57 @@ public class MainActivity extends AppCompatActivity {
         lastChosenColor = Color.rgb(255,0,255);
     }
 
-//    Context res = getApplicationContext();
 
     public void setColorSilver(View v) {
+        Resources res = getApplicationContext().getResources();
         canvasView.changeColor(res.getColor(R.color.colorSilver));
         lastChosenColor = res.getColor(R.color.colorSilver);
     }
 
     public void setColorGrey(View v) {
+        Resources res = getApplicationContext().getResources();
         canvasView.changeColor(res.getColor(R.color.colorGrey));
         lastChosenColor = res.getColor(R.color.colorGrey);
     }
 
     public void setColorMaroon(View v) {
+        Resources res = getApplicationContext().getResources();
         canvasView.changeColor(res.getColor(R.color.colorMaroon));
         lastChosenColor = res.getColor(R.color.colorMaroon);
     }
 
     public void setColorOlive(View v) {
+        Resources res = getApplicationContext().getResources();
         canvasView.changeColor(res.getColor(R.color.colorOlive));
         lastChosenColor = res.getColor(R.color.colorOlive);
     }
 
     public void setColorLime(View v) {
+        Resources res = getApplicationContext().getResources();
         canvasView.changeColor(res.getColor(R.color.colorLime));
         lastChosenColor = res.getColor(R.color.colorLime);
     }
 
     public void setColorAqua(View v) {
+        Resources res = getApplicationContext().getResources();
         canvasView.changeColor(res.getColor(R.color.colorAqua));
         lastChosenColor = res.getColor(R.color.colorAqua);
     }
 
     public void setColorTeal(View v) {
+        Resources res = getApplicationContext().getResources();
         canvasView.changeColor(res.getColor(R.color.colorTeal));
         lastChosenColor = res.getColor(R.color.colorTeal);
     }
 
     public void setColorNavy(View v) {
+        Resources res = getApplicationContext().getResources();
         canvasView.changeColor(res.getColor(R.color.colorNavy));
         lastChosenColor = res.getColor(R.color.colorNavy);
     }
 
     public void setColorFuchsia(View v) {
+        Resources res = getApplicationContext().getResources();
         canvasView.changeColor(res.getColor(R.color.colorFuchsia));
         lastChosenColor = res.getColor(R.color.colorFuchsia);
     }
