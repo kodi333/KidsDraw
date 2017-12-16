@@ -42,12 +42,6 @@ public class MainActivity extends AppCompatActivity {
         undoButton = (ImageButton)findViewById(R.id.undoButton);
         redoButton = (ImageButton)findViewById(R.id.redoButton);
 
-        // Hide app name in action bar
-
-//        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        // Hide scrollbar in buttons Scroll View
-
         horizontalPaintsView = (HorizontalScrollView) findViewById(R.id.HorizontalScroll);
         horizontalPaintsView.setHorizontalScrollBarEnabled(false);
 
@@ -64,67 +58,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    // handle button activities
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//
-//        if (id == R.id.drawBigbutton) {
-//            canvasView.changeStroke(20F);
-//            int whiteColorValue = Color.WHITE;
-//            if(canvasView.getColor() == whiteColorValue){
-//                int lastColor = lastChosenColor;
-//                canvasView.changeColor(lastColor);
-//            }
-//        }
-//
-//        if (id == R.id.drawSmallbutton) {
-//            canvasView.changeStroke(4F);
-//            int whiteColorValue = Color.WHITE;
-//            if(canvasView.getColor() == whiteColorValue){
-//                int lastColor = lastChosenColor;
-//                canvasView.changeColor(lastColor);
-//            }
-//        }
-//
-//        if (id == R.id.drawRoller) {
-//            canvasView.changeStroke(60F);
-//            int whiteColorValue = Color.WHITE;
-//            if(canvasView.getColor() == whiteColorValue){
-//                int lastColor = lastChosenColor;
-//                canvasView.changeColor(lastColor);
-//            }
-//        }
-//
-//        if (id == R.id.erase) {
-//            setColorWhite();
-//        }
-//
-//        if (id == R.id.saveFile) {
-//
-//            canvasView.buildDrawingCache();
-//            mBitmap = Bitmap.createBitmap(canvasView.getDrawingCache());
-//            Save savefile = new Save();
-//
-//            if (Build.VERSION.SDK_INT >= 23) {
-//                if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                        == PackageManager.PERMISSION_GRANTED) {
-//                    savefile.SaveImage(this,mBitmap);
-//                } else {
-//
-//                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-////                    return false;
-//                }
-//            }
-//            else { //permission is automatically granted on sdk<23 upon installation
-//                savefile.SaveImage(this,mBitmap);
-//            }
-//
-//            canvasView.destroyDrawingCache();
-//
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -174,10 +107,11 @@ public class MainActivity extends AppCompatActivity {
         lastChosenColor = Color.rgb(255,0,255);
     }
 
-    public void setColorMagenta(View v) {
-        canvasView.changeColor(Color.rgb(100, 255, 255));
-        lastChosenColor = Color.rgb(100, 255, 255);
+    public void setColorSilver(View v) {
+        canvasView.changeColor(Color.parseColor("#C0C0C0"));
+        lastChosenColor = Color.parseColor("#C0C0C0");
     }
+
 
     public void setGlow(View v) {
 //        BlurMaskFilter blur = new BlurMaskFilter(15, BlurMaskFilter.Blur.NORMAL);
@@ -191,12 +125,13 @@ public class MainActivity extends AppCompatActivity {
         canvasView.changeColor(Color.rgb(255,255,255));
     }
 
-    // Undo Redo Draw
+    // Undo  Draw
     public void undo(View v){
         canvasView.undoLastDraw();
         canvasView.invalidate();
     }
 
+    // Redo Draw
     public void redo(View v){
         canvasView.redoLastDraw();
         canvasView.invalidate();

@@ -97,10 +97,6 @@ public class CanvasView extends View {
        return color;
     }
 
-//    public int getPathsSize(){
-//        int size = paths.size();
-//        return size;
-//    }
 
     public void changeStroke(float size) {
         currentStroke = size;

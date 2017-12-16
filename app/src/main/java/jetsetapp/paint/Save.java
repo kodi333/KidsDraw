@@ -50,21 +50,11 @@ public class Save {
         String file_path = Environment.getExternalStorageDirectory().getAbsolutePath() + NameOfFolder;
         String currentDateAndTime = getCurrentDateAndTime();
 
-//        File dir = new File(context.getFilesDir(),NameOfFolder);
         File dir = new File(file_path);
         if (!dir.exists()) {
             dir.mkdir();
         }
         File file = new File(dir, NameOfFile + " " + currentDateAndTime + ".png");
- //       File file = new File(dir, NameOfFile);
-//
-//        if (!directory.exists())
-//            directory.mkdirs();
-//        // Create imageDir
-//        File mypath=new File(directory,"obrazek.png");
-        //File dir = new File(file_path);
-
-//        File file = new File(dir, NameOfFile +".jpg");
         try {
             FileOutputStream fOut = new FileOutputStream(file);
             ImageToSave.compress(Bitmap.CompressFormat.PNG, 100, fOut);
@@ -73,7 +63,6 @@ public class Save {
             ImageToSave.recycle();
             //addImageToGallery(file.getAbsolutePath(), context);
             MakeSureFileWasCreatedThenMakeAvabile(file);
-//            MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
             AbleToSave();
         } catch (FileNotFoundException e) {
             UnableToSave();
