@@ -2,7 +2,6 @@ package jetsetapp.paint;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -58,12 +57,12 @@ public class CanvasView extends View {
         paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setStrokeWidth(currentStroke);
 
-        _paintBlur = new Paint();
-        _paintBlur.set(paint);
-        _paintBlur.setColor((Color.rgb(249, 80, 75)));
-        _paintBlur.setStrokeWidth(currentStroke + 10F);
-        //_paintBlur.setShadowLayer(50,0,0,(Color.rgb(249, 80, 75)));
-        _paintBlur.setMaskFilter(new BlurMaskFilter(15, BlurMaskFilter.Blur.NORMAL));
+//        _paintBlur = new Paint();
+//        _paintBlur.set(paint);
+//        _paintBlur.setColor((Color.rgb(249, 80, 75)));
+//        _paintBlur.setStrokeWidth(currentStroke + 10F);
+//        //_paintBlur.setShadowLayer(50,0,0,(Color.rgb(249, 80, 75)));
+//        _paintBlur.setMaskFilter(new BlurMaskFilter(15, BlurMaskFilter.Blur.NORMAL));
 
     }
 
@@ -122,8 +121,10 @@ public class CanvasView extends View {
         }
         paint.setColor(currentColor);
         paint.setStrokeWidth(currentStroke);
-        canvas.drawPath(path, _paintBlur);
-        canvas.drawPath(path, paint);
+
+        // Additional effect path
+//        canvas.drawPath(path, _paintBlur);
+//        canvas.drawPath(path, paint);
 
 
     }

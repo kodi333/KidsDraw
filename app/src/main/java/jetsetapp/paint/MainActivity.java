@@ -108,6 +108,46 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setColorSilver(View v) {
+        canvasView.changeColor(R.color.colorSilver);
+        lastChosenColor = R.color.colorSilver;
+    }
+
+    public void setColorGrey(View v) {
+        canvasView.changeColor(Color.parseColor("#C0C0C0"));
+        lastChosenColor = Color.parseColor("#C0C0C0");
+    }
+
+    public void setColorMaroon(View v) {
+        canvasView.changeColor(Color.parseColor("#C0C0C0"));
+        lastChosenColor = Color.parseColor("#C0C0C0");
+    }
+
+    public void setColorOlive(View v) {
+        canvasView.changeColor(Color.parseColor("#C0C0C0"));
+        lastChosenColor = Color.parseColor("#C0C0C0");
+    }
+
+    public void setColorLime(View v) {
+        canvasView.changeColor(Color.parseColor("#C0C0C0"));
+        lastChosenColor = Color.parseColor("#C0C0C0");
+    }
+
+    public void setColorAqua(View v) {
+        canvasView.changeColor(Color.parseColor("#C0C0C0"));
+        lastChosenColor = Color.parseColor("#C0C0C0");
+    }
+
+    public void setColorTeal(View v) {
+        canvasView.changeColor(Color.parseColor("#C0C0C0"));
+        lastChosenColor = Color.parseColor("#C0C0C0");
+    }
+
+    public void setColorNavy(View v) {
+        canvasView.changeColor(Color.parseColor("#C0C0C0"));
+        lastChosenColor = Color.parseColor("#C0C0C0");
+    }
+
+    public void setColorFuchsia(View v) {
         canvasView.changeColor(Color.parseColor("#C0C0C0"));
         lastChosenColor = Color.parseColor("#C0C0C0");
     }
