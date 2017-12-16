@@ -3,18 +3,19 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorRed">#ff4043</color>
-    <color name="colorBlue">#40afff</color>
-    <color name="colorGreen">#99ff40</color>
-    <color name="colorYellow">#ffea00</color>
-    <color name="colorBlack">#000000</color>
-    <color name="colorSilver">#C0C0C0</color>
-    <color name="colorGrey">#808080</color>
+    <color name="colorRed" type="color">#ff4043</color>
+    <color name="colorBlue" type="color">#40afff</color>
+    <color name="colorGreen" type="color">#99ff40</color>
+    <color name="colorYellow" type="color">#ffea00</color>
+    <color name="colorBlack" type="color">#000000</color>
+    <color name="colorSilver" type="color">#C0C0C0</color>
+    <color name="colorGrey" type="string">#808080</color>
     <color name="colorMaroon">#800000</color>
-    <color name="colorOlive">#808000</color>
-    <color name="colorLime">#00FF00</color>
-    <color name="colorAqua">#00FFFF</color>
-    <color name="colorTeal">#008080</color>
-    <color name="colorNavy">#000080</color>
-    <color name="colorFuchsia">#FF00FF</color>
+    <color name="colorOlive" type="string">#808000</color>
+    <color name="colorLime" type="color">#00FF00</color>
+    <color name="colorAqua" type="color">#00FFFF</color>
+    <color name="colorTeal" type="color">#008080</color>
+    <color name="colorNavy" type="color">#000080</color>
+    <color name="colorFuchsia" type="color">#FF00FF</color>
+
 </resources>

@@ -121,10 +121,10 @@ public class CanvasView extends View {
         }
         paint.setColor(currentColor);
         paint.setStrokeWidth(currentStroke);
+        canvas.drawPath(path, paint);
 
         // Additional effect path
 //        canvas.drawPath(path, _paintBlur);
-//        canvas.drawPath(path, paint);
 
 
     }

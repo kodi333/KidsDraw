@@ -224,7 +224,7 @@
                 android:layout_toLeftOf="@+id/imageButtonSilver"
                 android:layout_toStartOf="@+id/imageButtonSilver"
                 android:background="@drawable/grey_splash"
-                android:onClick="setColorGray"
+                android:onClick="setColorGrey"
                 app:srcCompat="@drawable/grey_splash" />
 
             <ImageButton
