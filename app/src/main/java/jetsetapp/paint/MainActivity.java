@@ -165,6 +165,18 @@ public class MainActivity extends AppCompatActivity {
         lastChosenColor = res.getColor(R.color.colorFuchsia);
     }
 
+    public void smallButton(View v) {
+        canvasView.paint.setStrokeWidth(10F);
+    }
+
+    public void bigButton(View v) {
+        canvasView.paint.setStrokeWidth(30F);
+    }
+
+    public void drawRoller(View v) {
+        canvasView.paint.setStrokeWidth(60F);
+    }
+
 
     public void setGlow(View v) {
 //        BlurMaskFilter blur = new BlurMaskFilter(15, BlurMaskFilter.Blur.NORMAL);

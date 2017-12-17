@@ -63,7 +63,7 @@
             android:layout_toLeftOf="@+id/drawSmallbutton"
             android:layout_toStartOf="@+id/drawSmallbutton"
             android:background="@drawable/erase"
-            android:onClick="undo"
+            android:onClick="erase"
             android:scaleType="fitStart"
             app:srcCompat="@drawable/erase" />
 
@@ -73,7 +73,7 @@
             android:layout_toLeftOf="@+id/drawBigbutton"
             android:layout_toStartOf="@+id/drawBigbutton"
             android:background="@drawable/pencil"
-            android:onClick="undo"
+            android:onClick="smallButton"
             android:scaleType="fitStart"
             app:srcCompat="@drawable/pencil" />
 
@@ -83,7 +83,7 @@
             android:layout_toLeftOf="@+id/drawRoller"
             android:layout_toStartOf="@+id/drawRoller"
             android:background="@drawable/marker2"
-            android:onClick="undo"
+            android:onClick="bigButton"
             android:scaleType="fitStart"
             app:srcCompat="@drawable/marker2" />
 
@@ -93,7 +93,7 @@
             android:layout_toLeftOf="@+id/saveFile"
             android:layout_toStartOf="@+id/saveFile"
             android:background="@drawable/roll"
-            android:onClick="undo"
+            android:onClick="drawRoller"
             android:scaleType="fitStart"
             app:srcCompat="@drawable/roll" />
 
