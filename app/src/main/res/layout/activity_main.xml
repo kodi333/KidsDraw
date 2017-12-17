@@ -104,7 +104,7 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/save"
             android:ems="1"
-            android:onClick="undo"
+            android:onClick="saveFile"
             android:scaleType="fitStart"
             app:srcCompat="@drawable/save" />
 

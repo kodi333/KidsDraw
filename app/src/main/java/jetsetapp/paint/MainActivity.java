@@ -1,11 +1,14 @@
 package jetsetapp.paint;
 
+import android.Manifest;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.View;
@@ -180,6 +183,29 @@ public class MainActivity extends AppCompatActivity {
             int lastColor = lastChosenColor;
             canvasView.changeColor(lastColor);
         }
+    }
+
+    public void saveFile(View v) {
+
+        canvasView.buildDrawingCache();
+        mBitmap = Bitmap.createBitmap(canvasView.getDrawingCache());
+        Save savefile = new Save();
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                savefile.SaveImage(this, mBitmap);
+            } else {
+
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+//                    return false;
+            }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            savefile.SaveImage(this, mBitmap);
+        }
+
+        canvasView.destroyDrawingCache();
+
     }
 
 
