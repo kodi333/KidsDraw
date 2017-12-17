@@ -169,11 +169,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void smallButton(View v) {
-        canvasView.paint.setStrokeWidth(10F);
+        canvasView.changeStroke(10F);
+        int whiteColorValue = Color.WHITE;
+        if (canvasView.getColor() == whiteColorValue) {
+            int lastColor = lastChosenColor;
+            canvasView.changeColor(lastColor);
+        }
     }
 
     public void bigButton(View v) {
-        canvasView.paint.setStrokeWidth(30F);
+        canvasView.changeStroke(3F);
+        int whiteColorValue = Color.WHITE;
+        if (canvasView.getColor() == whiteColorValue) {
+            int lastColor = lastChosenColor;
+            canvasView.changeColor(lastColor);
+        }
+    }
+
+    public void erase(View v) {
+        setColorWhite();
     }
 
     public void drawRoller(View v) {
