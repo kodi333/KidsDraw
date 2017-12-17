@@ -174,7 +174,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void drawRoller(View v) {
-        canvasView.paint.setStrokeWidth(60F);
+        canvasView.changeStroke(60F);
+        int whiteColorValue = Color.WHITE;
+        if (canvasView.getColor() == whiteColorValue) {
+            int lastColor = lastChosenColor;
+            canvasView.changeColor(lastColor);
+        }
     }
 
 
