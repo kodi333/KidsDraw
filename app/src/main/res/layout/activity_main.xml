@@ -39,12 +39,13 @@
         app:srcCompat="@drawable/redo" />
 
     <ImageButton
-        android:id="@+id/clear"
+        android:id="@+id/clearButton"
         style="@style/undoButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:onClick="clearCanvas"
+        android:visibility="invisible"
         app:srcCompat="@drawable/trash" />
 
     <RelativeLayout
@@ -58,14 +59,22 @@
         android:orientation="horizontal">
 
         <ImageButton
+            android:id="@+id/addPicture"
+            style="@style/colorButton"
+            android:layout_toLeftOf="@+id/erase"
+            android:layout_toStartOf="@+id/erase"
+            android:background="@drawable/dog1"
+            android:onClick="addPicture"
+            android:scaleType="fitStart" />
+
+        <ImageButton
             android:id="@+id/erase"
             style="@style/colorButton"
             android:layout_toLeftOf="@+id/drawSmallbutton"
             android:layout_toStartOf="@+id/drawSmallbutton"
             android:background="@drawable/erase"
             android:onClick="erase"
-            android:scaleType="fitStart"
-            app:srcCompat="@drawable/erase" />
+            android:scaleType="fitStart" />
 
         <ImageButton
             android:id="@+id/drawSmallbutton"
@@ -74,8 +83,7 @@
             android:layout_toStartOf="@+id/drawBigbutton"
             android:background="@drawable/pencil"
             android:onClick="smallButton"
-            android:scaleType="fitStart"
-            app:srcCompat="@drawable/pencil" />
+            android:scaleType="fitStart" />
 
         <ImageButton
             android:id="@+id/drawBigbutton"
@@ -84,8 +92,7 @@
             android:layout_toStartOf="@+id/drawRoller"
             android:background="@drawable/marker2"
             android:onClick="bigButton"
-            android:scaleType="fitStart"
-            app:srcCompat="@drawable/marker2" />
+            android:scaleType="fitStart" />
 
         <ImageButton
             android:id="@+id/drawRoller"
@@ -94,8 +101,7 @@
             android:layout_toStartOf="@+id/saveFile"
             android:background="@drawable/roll"
             android:onClick="drawRoller"
-            android:scaleType="fitStart"
-            app:srcCompat="@drawable/roll" />
+            android:scaleType="fitStart" />
 
         <ImageButton
             android:id="@+id/saveFile"
@@ -105,8 +111,7 @@
             android:background="@drawable/save"
             android:ems="1"
             android:onClick="saveFile"
-            android:scaleType="fitStart"
-            app:srcCompat="@drawable/save" />
+            android:scaleType="fitStart" />
 
 
     </RelativeLayout>
@@ -197,16 +202,6 @@
                 android:onClick="setColorBlack"
                 app:srcCompat="@drawable/black_splash" />
 
-            <!--<ImageButton-->
-            <!--android:id="@+id/imageButtonMagenta"-->
-            <!--style="@style/colorButton"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:layout_toLeftOf="@+id/imageButtonBlack"-->
-            <!--android:layout_toStartOf="@+id/imageButtonBlack"-->
-            <!--android:background="@drawable/red_glow_splash"-->
-            <!--android:onClick="setColorMagenta"-->
-            <!--app:srcCompat="@drawable/red_glow_splash" />-->
-
             <ImageButton
                 android:id="@+id/imageButtonSilver"
                 style="@style/colorButton"
@@ -296,6 +291,66 @@
                 android:background="@drawable/fuchsia_splash"
                 android:onClick="setColorFuchsia"
                 app:srcCompat="@drawable/fuchsia_splash" />
+
+            <ImageButton
+                android:id="@+id/imageButtonBrown1"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonFuchsia"
+                android:layout_toStartOf="@+id/imageButtonFuchsia"
+                android:background="@drawable/brown1"
+                android:onClick="setColorBrown1"
+                app:srcCompat="@drawable/brown1" />
+
+            <ImageButton
+                android:id="@+id/imageButtonBrown2"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonBrown1"
+                android:layout_toStartOf="@+id/imageButtonBrown1"
+                android:background="@drawable/brown2"
+                android:onClick="setColorBrown2"
+                app:srcCompat="@drawable/brown2" />
+
+            <ImageButton
+                android:id="@+id/imageButtonBrown3"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonBrown2"
+                android:layout_toStartOf="@+id/imageButtonBrown2"
+                android:background="@drawable/brown3"
+                android:onClick="setColorBrown3"
+                app:srcCompat="@drawable/brown3" />
+
+            <ImageButton
+                android:id="@+id/imageButtonLessBrown1"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonBrown3"
+                android:layout_toStartOf="@+id/imageButtonBrown3"
+                android:background="@drawable/less_brown1"
+                android:onClick="setColorLessBrown1"
+                app:srcCompat="@drawable/less_brown1" />
+
+            <ImageButton
+                android:id="@+id/imageButtonLessBrown2"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonLessBrown1"
+                android:layout_toStartOf="@+id/imageButtonLessBrown1"
+                android:background="@drawable/less_brown2"
+                android:onClick="setColorLessBrown2"
+                app:srcCompat="@drawable/less_brown2" />
+
+            <ImageButton
+                android:id="@+id/imageButtonLessBrown3"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonLessBrown2"
+                android:layout_toStartOf="@+id/imageButtonLessBrown2"
+                android:background="@drawable/less_brown3"
+                android:onClick="setColorLessBrown3"
+                app:srcCompat="@drawable/less_brown3" />
 
 
         </LinearLayout>

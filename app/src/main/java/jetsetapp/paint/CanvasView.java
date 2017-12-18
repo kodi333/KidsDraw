@@ -76,26 +76,15 @@ public class CanvasView extends View {
 
     }
 
-
-    public void saveFile() {
-
-        mBitmap = Bitmap.createBitmap(this.getWidth(),this.getHeight(),Bitmap.Config.ARGB_8888);
-
-        Save savefile = new Save();
-        savefile.SaveImage(context,mBitmap);
-    }
-
     public void changeColor(int color) {
         currentColor = color;
         path = new Path();
     }
 
-
     public int getColor() {
         int color = currentColor;
        return color;
     }
-
 
     public void changeStroke(float size) {
         currentStroke = size;
@@ -122,6 +111,7 @@ public class CanvasView extends View {
         paint.setColor(currentColor);
         paint.setStrokeWidth(currentStroke);
         canvas.drawPath(path, paint);
+
 
         // Additional effect path
 //        canvas.drawPath(path, _paintBlur);
@@ -154,6 +144,7 @@ public class CanvasView extends View {
 //         Show undo redo buttons
         if(paths.size() > 0){
             MainActivity.undoButton.setVisibility(View.VISIBLE);
+            MainActivity.clearButton.setVisibility(View.VISIBLE);
         }
     }
 
@@ -170,6 +161,7 @@ public class CanvasView extends View {
             if(undonePaths.size() > 0){
                 MainActivity.redoButton.setVisibility(View.VISIBLE);
             }
+
 
 //              invalidate();
         }
@@ -190,7 +182,7 @@ public class CanvasView extends View {
             }
 
             if(paths.size() > 0){
-            MainActivity.undoButton.setVisibility(View.VISIBLE);
+                MainActivity.undoButton.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -205,6 +197,7 @@ public class CanvasView extends View {
         path = new Path();
         if(paths.size() <= 0){
             MainActivity.undoButton.setVisibility(View.INVISIBLE);
+            MainActivity.clearButton.setVisibility(View.INVISIBLE);
         }
 //
         if(undonePaths.size() <= 0){

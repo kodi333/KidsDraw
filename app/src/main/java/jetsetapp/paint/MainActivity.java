@@ -6,11 +6,14 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
@@ -21,9 +24,11 @@ public class MainActivity extends AppCompatActivity {
 
     protected static ImageButton undoButton;
     protected static ImageButton redoButton;
+    protected static ImageButton clearButton;
     private static Boolean setGlow;
     FileOutputStream fos = null;
     int lastChosenColor = Color.BLACK;
+
     private CanvasView canvasView;
     private Bitmap saveBitMap;
     private Canvas saveCanvas;
@@ -47,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         undoButton = (ImageButton)findViewById(R.id.undoButton);
         redoButton = (ImageButton)findViewById(R.id.redoButton);
+        clearButton = (ImageButton) findViewById(R.id.clearButton);
 
         horizontalPaintsView = (HorizontalScrollView) findViewById(R.id.HorizontalScroll);
         horizontalPaintsView.setHorizontalScrollBarEnabled(false);
@@ -59,10 +65,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.action_menu, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
 
     @Override
@@ -77,6 +83,19 @@ public class MainActivity extends AppCompatActivity {
 //            Log.v(TAG,"Permission: "+permissions[0]+ "was "+grantResults[0]);
             //resume tasks needing this permission
         }
+    }
+
+    public void addPicture(View v) {
+//        canvasView.setBackgroundPicture(canvasView.getLeft(),canvasView.getTop(),canvasView.getRight(),canvasView.getBottom());
+        Drawable d = getResources().getDrawable(R.drawable.dog1);
+//        Drawable d = ContextCompat.getDrawable(context, R.drawable.dog2);
+        d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+        Drawable s = new ScaleDrawable(d, Gravity.FILL_VERTICAL, 1.00f, 1.00f);
+        s.setLevel(10000);
+//        d.setBounds(canvasView.getLeft(),canvasView.getTop(),canvasView.getRight(),canvasView.getBottom());
+        canvasView.setBackground(s);
+//        canvasView.invalidate();
+        Log.v("TAG", d.toString());
     }
 
 
@@ -169,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void smallButton(View v) {
-        canvasView.changeStroke(10F);
+        canvasView.changeStroke(3F);
         int whiteColorValue = Color.WHITE;
         if (canvasView.getColor() == whiteColorValue) {
             int lastColor = lastChosenColor;
@@ -178,7 +197,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void bigButton(View v) {
-        canvasView.changeStroke(3F);
+        canvasView.changeStroke(10F);
+        int whiteColorValue = Color.WHITE;
+        if (canvasView.getColor() == whiteColorValue) {
+            int lastColor = lastChosenColor;
+            canvasView.changeColor(lastColor);
+        }
+    }
+
+    public void drawRoller(View v) {
+        canvasView.changeStroke(30F);
         int whiteColorValue = Color.WHITE;
         if (canvasView.getColor() == whiteColorValue) {
             int lastColor = lastChosenColor;
@@ -188,15 +216,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void erase(View v) {
         setColorWhite();
-    }
-
-    public void drawRoller(View v) {
-        canvasView.changeStroke(60F);
-        int whiteColorValue = Color.WHITE;
-        if (canvasView.getColor() == whiteColorValue) {
-            int lastColor = lastChosenColor;
-            canvasView.changeColor(lastColor);
-        }
     }
 
     public void saveFile(View v) {
