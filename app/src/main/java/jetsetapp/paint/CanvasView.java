@@ -53,6 +53,7 @@ public class CanvasView extends View {
         paint.setDither(true);
         paint.setColor(Color.BLACK); // BLACK
         paint.setStyle(Paint.Style.STROKE);
+//        paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setStrokeWidth(currentStroke);

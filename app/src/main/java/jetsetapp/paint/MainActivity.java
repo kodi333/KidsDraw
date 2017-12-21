@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         horizontalPaintsView = (HorizontalScrollView) findViewById(R.id.HorizontalScroll);
         horizontalPaintsView.setHorizontalScrollBarEnabled(false);
 
-        // Disable hardware acceleration for shadow color o work
+//         Disable hardware acceleration for shadow color o work
 
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
 //            canvasView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         Drawable s = new ScaleDrawable(d, Gravity.FILL_VERTICAL, 1.00f, 1.00f);
         s.setLevel(10000);
 //        d.setBounds(canvasView.getLeft(),canvasView.getTop(),canvasView.getRight(),canvasView.getBottom());
+//        canvasView.setBackgroundColor(Color.TRANSPARENT);
         canvasView.setBackground(s);
 //        canvasView.invalidate();
         Log.v("TAG", d.toString());
