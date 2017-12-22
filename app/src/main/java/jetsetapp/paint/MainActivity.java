@@ -1,19 +1,17 @@
 package jetsetapp.paint;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ScaleDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
@@ -26,16 +24,18 @@ public class MainActivity extends AppCompatActivity {
     protected static ImageButton redoButton;
     protected static ImageButton clearButton;
     private static Boolean setGlow;
+    private static CanvasView canvasView;
     FileOutputStream fos = null;
     int lastChosenColor = Color.BLACK;
-
-    private CanvasView canvasView;
     private Bitmap saveBitMap;
     private Canvas saveCanvas;
     private View view;
     private Bitmap mBitmap;
     private HorizontalScrollView horizontalPaintsView;
 
+    public static CanvasView getCanvasView() {
+        return canvasView;
+    }
 
     public static Boolean getSetGlow() {
         return setGlow;
@@ -57,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
         horizontalPaintsView = (HorizontalScrollView) findViewById(R.id.HorizontalScroll);
         horizontalPaintsView.setHorizontalScrollBarEnabled(false);
 
+        if (MainGallery.isPictureChosen()) {
+
+            setCanvasViewBackground();
+        }
 //         Disable hardware acceleration for shadow color o work
 
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
@@ -64,11 +68,6 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
     }
-
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.action_menu, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
 
 
     @Override
@@ -86,107 +85,119 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addPicture(View v) {
-//        canvasView.setBackgroundPicture(canvasView.getLeft(),canvasView.getTop(),canvasView.getRight(),canvasView.getBottom());
-        Drawable d = getResources().getDrawable(R.drawable.dog1);
-//        Drawable d = ContextCompat.getDrawable(context, R.drawable.dog2);
-        d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
-        Drawable s = new ScaleDrawable(d, Gravity.FILL_VERTICAL, 1.00f, 1.00f);
-        s.setLevel(10000);
-//        d.setBounds(canvasView.getLeft(),canvasView.getTop(),canvasView.getRight(),canvasView.getBottom());
-//        canvasView.setBackgroundColor(Color.TRANSPARENT);
-        canvasView.setBackground(s);
-//        canvasView.invalidate();
-        Log.v("TAG", d.toString());
+
+        Intent mainGallery = new Intent(MainActivity.this, MainGallery.class);
+        startActivity(mainGallery);
+
     }
 
+    public void setCanvasViewBackground() {
+        Bundle extras = getIntent().getExtras();
+        String b = extras.getString("picture");
+        Drawable d = getResources().getDrawable(getResources().getIdentifier(b, "drawable", getPackageName()));
+        d.setBounds(0, 0, (int) (d.getIntrinsicWidth() * 0.5), (int) (d.getIntrinsicHeight() * 0.5));
+//        Drawable s = new ScaleDrawable(d, Gravity.FILL_VERTICAL, 0.50f, 0.50f);
+//        s.setLevel(10000);
+//
+        canvasView.setBackground(d);
+    }
+
+    public void setCanvasColor(View v) {
+        ImageButton x = (ImageButton) v;
+        String buttonTag = String.valueOf(x.getTag());
+        Log.v("TAG", buttonTag);
+        canvasView.changeColor(Color.parseColor(buttonTag));
+        lastChosenColor = Color.parseColor(buttonTag);
+
+    }
 
     public void clearCanvas(View v){
         canvasView.clearCanvas();
     }
 
-    public void setColorBlue(View v){
-       canvasView.changeColor(Color.BLUE);
-        lastChosenColor = Color.BLUE;
-    }
-    public void setColorRed(View v){
-        canvasView.changeColor(Color.RED);
-        lastChosenColor = Color.RED;
-    }
-    public void setColorGreen(View v){
-        canvasView.changeColor(Color.GREEN);
-        lastChosenColor = Color.GREEN;
-    }
-    public void setColorYellow(View v){
-        canvasView.changeColor(Color.YELLOW);
-        lastChosenColor = Color.YELLOW;
-    }
-    public void setColorBlack(View v){
-        canvasView.changeColor(Color.BLACK);
-        lastChosenColor = Color.BLACK;
-    }
-    public void setColorBrown(View v){
-        canvasView.changeColor(Color.rgb(140,70,0));
-        lastChosenColor = Color.rgb(140,70,0);
-    }
-    public void setColorPink(View v){
-        canvasView.changeColor(Color.rgb(255,0,255));
-        lastChosenColor = Color.rgb(255,0,255);
-    }
-
-
-    public void setColorSilver(View v) {
-        Resources res = getApplicationContext().getResources();
-        canvasView.changeColor(res.getColor(R.color.colorSilver));
-        lastChosenColor = res.getColor(R.color.colorSilver);
-    }
-
-    public void setColorGrey(View v) {
-        Resources res = getApplicationContext().getResources();
-        canvasView.changeColor(res.getColor(R.color.colorGrey));
-        lastChosenColor = res.getColor(R.color.colorGrey);
-    }
-
-    public void setColorMaroon(View v) {
-        Resources res = getApplicationContext().getResources();
-        canvasView.changeColor(res.getColor(R.color.colorMaroon));
-        lastChosenColor = res.getColor(R.color.colorMaroon);
-    }
-
-    public void setColorOlive(View v) {
-        Resources res = getApplicationContext().getResources();
-        canvasView.changeColor(res.getColor(R.color.colorOlive));
-        lastChosenColor = res.getColor(R.color.colorOlive);
-    }
-
-    public void setColorLime(View v) {
-        Resources res = getApplicationContext().getResources();
-        canvasView.changeColor(res.getColor(R.color.colorLime));
-        lastChosenColor = res.getColor(R.color.colorLime);
-    }
-
-    public void setColorAqua(View v) {
-        Resources res = getApplicationContext().getResources();
-        canvasView.changeColor(res.getColor(R.color.colorAqua));
-        lastChosenColor = res.getColor(R.color.colorAqua);
-    }
-
-    public void setColorTeal(View v) {
-        Resources res = getApplicationContext().getResources();
-        canvasView.changeColor(res.getColor(R.color.colorTeal));
-        lastChosenColor = res.getColor(R.color.colorTeal);
-    }
-
-    public void setColorNavy(View v) {
-        Resources res = getApplicationContext().getResources();
-        canvasView.changeColor(res.getColor(R.color.colorNavy));
-        lastChosenColor = res.getColor(R.color.colorNavy);
-    }
-
-    public void setColorFuchsia(View v) {
-        Resources res = getApplicationContext().getResources();
-        canvasView.changeColor(res.getColor(R.color.colorFuchsia));
-        lastChosenColor = res.getColor(R.color.colorFuchsia);
-    }
+//    public void setColorBlue(View v){
+//       canvasView.changeColor(Color.BLUE);
+//        lastChosenColor = Color.BLUE;
+//    }
+//    public void setColorRed(View v){
+//        canvasView.changeColor(Color.RED);
+//        lastChosenColor = Color.RED;
+//    }
+//    public void setColorGreen(View v){
+//        canvasView.changeColor(Color.GREEN);
+//        lastChosenColor = Color.GREEN;
+//    }
+//    public void setColorYellow(View v){
+//        canvasView.changeColor(Color.YELLOW);
+//        lastChosenColor = Color.YELLOW;
+//    }
+//    public void setColorBlack(View v){
+//        canvasView.changeColor(Color.BLACK);
+//        lastChosenColor = Color.BLACK;
+//    }
+//    public void setColorBrown(View v){
+//        canvasView.changeColor(Color.rgb(140,70,0));
+//        lastChosenColor = Color.rgb(140,70,0);
+//    }
+//    public void setColorPink(View v){
+//        canvasView.changeColor(Color.rgb(255,0,255));
+//        lastChosenColor = Color.rgb(255,0,255);
+//    }
+//
+//
+//    public void setColorSilver(View v) {
+//        Resources res = getApplicationContext().getResources();
+//        canvasView.changeColor(res.getColor(R.color.colorSilver));
+//        lastChosenColor = res.getColor(R.color.colorSilver);
+//    }
+//
+//    public void setColorGrey(View v) {
+//        Resources res = getApplicationContext().getResources();
+//        canvasView.changeColor(res.getColor(R.color.colorGrey));
+//        lastChosenColor = res.getColor(R.color.colorGrey);
+//    }
+//
+//    public void setColorMaroon(View v) {
+//        Resources res = getApplicationContext().getResources();
+//        canvasView.changeColor(res.getColor(R.color.colorMaroon));
+//        lastChosenColor = res.getColor(R.color.colorMaroon);
+//    }
+//
+//    public void setColorOlive(View v) {
+//        Resources res = getApplicationContext().getResources();
+//        canvasView.changeColor(res.getColor(R.color.colorOlive));
+//        lastChosenColor = res.getColor(R.color.colorOlive);
+//    }
+//
+//    public void setColorLime(View v) {
+//        Resources res = getApplicationContext().getResources();
+//        canvasView.changeColor(res.getColor(R.color.colorLime));
+//        lastChosenColor = res.getColor(R.color.colorLime);
+//    }
+//
+//    public void setColorAqua(View v) {
+//        Resources res = getApplicationContext().getResources();
+//        canvasView.changeColor(res.getColor(R.color.colorAqua));
+//        lastChosenColor = res.getColor(R.color.colorAqua);
+//    }
+//
+//    public void setColorTeal(View v) {
+//        Resources res = getApplicationContext().getResources();
+//        canvasView.changeColor(res.getColor(R.color.colorTeal));
+//        lastChosenColor = res.getColor(R.color.colorTeal);
+//    }
+//
+//    public void setColorNavy(View v) {
+//        Resources res = getApplicationContext().getResources();
+//        canvasView.changeColor(res.getColor(R.color.colorNavy));
+//        lastChosenColor = res.getColor(R.color.colorNavy);
+//    }
+//
+//    public void setColorFuchsia(View v) {
+//        Resources res = getApplicationContext().getResources();
+//        canvasView.changeColor(res.getColor(R.color.colorFuchsia));
+//        lastChosenColor = res.getColor(R.color.colorFuchsia);
+//    }
 
     public void smallButton(View v) {
         canvasView.changeStroke(3F);
