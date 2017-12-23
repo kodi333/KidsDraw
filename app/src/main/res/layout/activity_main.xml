@@ -18,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/HorizontalScroll"
+        android:layout_margin="10dp"
         android:background="#ffffff" />
 
     <ImageButton
@@ -57,6 +58,15 @@
         android:layout_alignParentRight="false"
         android:gravity="top"
         android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/floodFill"
+            style="@style/colorButton"
+            android:layout_toLeftOf="@+id/addPicture"
+            android:layout_toStartOf="@+id/addPicture"
+            android:background="@drawable/bucket"
+            android:onClick="selectFloodFill"
+            android:scaleType="fitStart" />
 
         <ImageButton
             android:id="@+id/addPicture"
@@ -158,7 +168,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/imageButtonBlue"
                 android:layout_toStartOf="@+id/imageButtonBlue"
-                android:background="@drawable/red_splash"
+                android:background="@drawable/cff0000"
                 android:onClick="setCanvasColor"
                 android:tag="#FF0000" />
 
@@ -168,7 +178,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/imageButtonRed"
                 android:layout_toStartOf="@+id/imageButtonRed"
-                android:background="@drawable/paint_splash"
+                android:background="@drawable/c800080"
                 android:onClick="setCanvasColor"
                 android:tag="#800080" />
 
@@ -178,7 +188,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/imageButtonPurple"
                 android:layout_toStartOf="@+id/imageButtonPurple"
-                android:background="@drawable/green_splash"
+                android:background="@drawable/c008000"
                 android:onClick="setCanvasColor"
                 android:tag="#008000" />
 
@@ -188,7 +198,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/imageButtonGreen"
                 android:layout_toStartOf="@+id/imageButtonGreen"
-                android:background="@drawable/brown_splash"
+                android:background="@drawable/c800000"
                 android:onClick="setCanvasColor"
                 android:tag="#800000" />
 
@@ -198,7 +208,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/imageButtonBrown"
                 android:layout_toStartOf="@+id/imageButtonBrown"
-                android:background="@drawable/black_splash"
+                android:background="@drawable/c000000"
                 android:onClick="setCanvasColor"
                 android:tag="#000000" />
 
@@ -208,9 +218,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/imageButtonBlack"
                 android:layout_toStartOf="@+id/imageButtonBlack"
-                android:background="@drawable/silver_splash"
-                android:onClick="setColorSilver"
-                android:tag="#000000" />
+                android:background="@drawable/cc0c0c0"
+                android:onClick="setCanvasColor"
+                android:tag="#C0C0C0" />
 
             <ImageButton
                 android:id="@+id/imageButtonGrey"
@@ -218,9 +228,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/imageButtonSilver"
                 android:layout_toStartOf="@+id/imageButtonSilver"
-                android:background="@drawable/grey_splash"
-                android:onClick="setColorGrey"
-                app:srcCompat="@drawable/grey_splash" />
+                android:background="@drawable/ce6b0aa"
+                android:onClick="setCanvasColor"
+                android:tag="#E6B0AA" />
 
             <ImageButton
                 android:id="@+id/imageButtonMaroon"
@@ -228,9 +238,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/imageButtonGrey"
                 android:layout_toStartOf="@+id/imageButtonGrey"
-                android:background="@drawable/maroon_splash"
-                android:onClick="setColorMaroon"
-                app:srcCompat="@drawable/maroon_splash" />
+                android:background="@drawable/cc0392b"
+                android:onClick="setCanvasColor"
+                android:tag="#C0392B" />
 
             <ImageButton
                 android:id="@+id/imageButtonOlive"
@@ -238,9 +248,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/imageButtonMaroon"
                 android:layout_toStartOf="@+id/imageButtonMaroon"
-                android:background="@drawable/olivie_splash"
-                android:onClick="setColorOlive"
-                app:srcCompat="@drawable/olivie_splash" />
+                android:background="@drawable/c7b241c"
+                android:onClick="setCanvasColor"
+                android:tag="#7B241C" />
 
             <ImageButton
                 android:id="@+id/imageButtonLime"
@@ -248,9 +258,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/imageButtonOlive"
                 android:layout_toStartOf="@+id/imageButtonOlive"
-                android:background="@drawable/lime_splash"
-                android:onClick="setColorLime"
-                app:srcCompat="@drawable/lime_splash" />
+                android:background="@drawable/cf5b7b1"
+                android:onClick="setCanvasColor"
+                android:tag="#F5B7B1" />
 
             <ImageButton
                 android:id="@+id/imageButtonAqua"
@@ -258,9 +268,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/imageButtonLime"
                 android:layout_toStartOf="@+id/imageButtonLime"
-                android:background="@drawable/aqua_splash"
-                android:onClick="setColorAqua"
-                app:srcCompat="@drawable/aqua_splash" />
+                android:background="@drawable/ce74c3c"
+                android:onClick="setCanvasColor"
+                android:tag="#E74C3C" />
 
             <ImageButton
                 android:id="@+id/imageButtonTeal"
@@ -268,9 +278,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/imageButtonAqua"
                 android:layout_toStartOf="@+id/imageButtonAqua"
-                android:background="@drawable/teal_splash"
-                android:onClick="setColorTeal"
-                app:srcCompat="@drawable/teal_splash" />
+                android:background="@drawable/c943126"
+                android:onClick="setCanvasColor"
+                android:tag="#943126" />
 
             <ImageButton
                 android:id="@+id/imageButtonNavy"
@@ -278,9 +288,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/imageButtonTeal"
                 android:layout_toStartOf="@+id/imageButtonTeal"
-                android:background="@drawable/navy_splash"
-                android:onClick="setColorNavy"
-                app:srcCompat="@drawable/navy_splash" />
+                android:background="@drawable/cd7bde2"
+                android:onClick="setCanvasColor"
+                android:tag="#D7BDE2" />
 
             <ImageButton
                 android:id="@+id/imageButtonFuchsia"
@@ -288,9 +298,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/imageButtonNavy"
                 android:layout_toStartOf="@+id/imageButtonNavy"
-                android:background="@drawable/fuchsia_splash"
-                android:onClick="setColorFuchsia"
-                app:srcCompat="@drawable/fuchsia_splash" />
+                android:background="@drawable/caf7ac5"
+                android:onClick="setCanvasColor"
+                android:tag="#AF7AC5" />
 
             <ImageButton
                 android:id="@+id/imageButtonBrown1"
@@ -298,9 +308,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/imageButtonFuchsia"
                 android:layout_toStartOf="@+id/imageButtonFuchsia"
-                android:background="@drawable/brown1"
-                android:onClick="setColorBrown1"
-                app:srcCompat="@drawable/brown1" />
+                android:background="@drawable/c633974"
+                android:onClick="setCanvasColor"
+                android:tag="#633974" />
 
             <ImageButton
                 android:id="@+id/imageButtonBrown2"
@@ -308,9 +318,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/imageButtonBrown1"
                 android:layout_toStartOf="@+id/imageButtonBrown1"
-                android:background="@drawable/brown2"
-                android:onClick="setColorBrown2"
-                app:srcCompat="@drawable/brown2" />
+                android:background="@drawable/cd2b4de"
+                android:onClick="setCanvasColor"
+                android:tag="#D2B4DE" />
 
             <ImageButton
                 android:id="@+id/imageButtonBrown3"
@@ -318,9 +328,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/imageButtonBrown2"
                 android:layout_toStartOf="@+id/imageButtonBrown2"
-                android:background="@drawable/brown3"
-                android:onClick="setColorBrown3"
-                app:srcCompat="@drawable/brown3" />
+                android:background="@drawable/ca569bd"
+                android:onClick="setCanvasColor"
+                android:tag="#A569BD" />
 
             <ImageButton
                 android:id="@+id/imageButtonLessBrown1"
@@ -328,9 +338,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/imageButtonBrown3"
                 android:layout_toStartOf="@+id/imageButtonBrown3"
-                android:background="@drawable/less_brown1"
-                android:onClick="setColorLessBrown1"
-                app:srcCompat="@drawable/less_brown1" />
+                android:background="@drawable/c5b2c6f"
+                android:onClick="setCanvasColor"
+                android:tag="#5B2C6F" />
 
             <ImageButton
                 android:id="@+id/imageButtonLessBrown2"
@@ -338,9 +348,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/imageButtonLessBrown1"
                 android:layout_toStartOf="@+id/imageButtonLessBrown1"
-                android:background="@drawable/less_brown2"
-                android:onClick="setColorLessBrown2"
-                app:srcCompat="@drawable/less_brown2" />
+                android:background="@drawable/ca9cce3"
+                android:onClick="setCanvasColor"
+                android:tag="#A9CCE3" />
 
             <ImageButton
                 android:id="@+id/imageButtonLessBrown3"
@@ -348,9 +358,109 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/imageButtonLessBrown2"
                 android:layout_toStartOf="@+id/imageButtonLessBrown2"
-                android:background="@drawable/less_brown3"
-                android:onClick="setColorLessBrown3"
-                app:srcCompat="@drawable/less_brown3" />
+                android:background="@drawable/c5499c7"
+                android:onClick="setCanvasColor"
+                android:tag="#5499C7" />
+
+            <ImageButton
+                android:id="@+id/c1A5276"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonLessBrown3"
+                android:layout_toStartOf="@+id/imageButtonLessBrown3"
+                android:background="@drawable/c1a5276"
+                android:onClick="setCanvasColor"
+                android:tag="#1A5276" />
+
+            <ImageButton
+                android:id="@+id/cAED6F1"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonLessBrown2"
+                android:layout_toStartOf="@+id/imageButtonLessBrown2"
+                android:background="@drawable/caed6f1"
+                android:onClick="setCanvasColor"
+                android:tag="#AED6F1" />
+
+            <ImageButton
+                android:id="@+id/c3498DB"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonLessBrown2"
+                android:layout_toStartOf="@+id/imageButtonLessBrown2"
+                android:background="@drawable/c3498db"
+                android:onClick="setCanvasColor"
+                android:tag="#3498DB" />
+
+            <ImageButton
+                android:id="@+id/c21618C"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonLessBrown2"
+                android:layout_toStartOf="@+id/imageButtonLessBrown2"
+                android:background="@drawable/c21618c"
+                android:onClick="setCanvasColor"
+                android:tag="#21618C" />
+
+            <ImageButton
+                android:id="@+id/cA3E4D7"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonLessBrown2"
+                android:layout_toStartOf="@+id/imageButtonLessBrown2"
+                android:background="@drawable/ca3e4d7"
+                android:onClick="setCanvasColor"
+                android:tag="#A3E4D7" />
+
+            <ImageButton
+                android:id="@+id/c5dade2"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonLessBrown2"
+                android:layout_toStartOf="@+id/imageButtonLessBrown2"
+                android:background="@drawable/c5dade2"
+                android:onClick="setCanvasColor"
+                android:tag="#5dade2" />
+
+            <ImageButton
+                android:id="@+id/c117864"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonLessBrown2"
+                android:layout_toStartOf="@+id/imageButtonLessBrown2"
+                android:background="@drawable/c117864"
+                android:onClick="setCanvasColor"
+                android:tag="#117864" />
+
+            <ImageButton
+                android:id="@+id/cA9DFBF"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonLessBrown2"
+                android:layout_toStartOf="@+id/imageButtonLessBrown2"
+                android:background="@drawable/ca9dfbf"
+                android:onClick="setCanvasColor"
+                android:tag="#A9DFBF" />
+
+            <ImageButton
+                android:id="@+id/c52BE80"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonLessBrown2"
+                android:layout_toStartOf="@+id/imageButtonLessBrown2"
+                android:background="@drawable/c52be80"
+                android:onClick="setCanvasColor"
+                android:tag="#52BE80" />
+
+            <ImageButton
+                android:id="@+id/c196F3D"
+                style="@style/colorButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imageButtonLessBrown2"
+                android:layout_toStartOf="@+id/imageButtonLessBrown2"
+                android:background="@drawable/c196f3d"
+                android:onClick="setCanvasColor"
+                android:tag="#196F3D" />
 
 
         </LinearLayout>

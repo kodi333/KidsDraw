@@ -1,11 +1,15 @@
 package jetsetapp.paint;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,15 +19,19 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jetsetapp.paint.MainActivity.canvasView;
+
 
 public class CanvasView extends View {
 
     private static final float TOLERANCE = 5;
+    final Point p1 = new Point();
     protected Paint paint = new Paint();
     protected Paint _paintBlur = new Paint();
     Context context;
     FileOutputStream fos = null;
     View undoButton;
+    ProgressDialog pd;
     private List<Path> paths = new ArrayList<Path>();
     private List<Integer> colors = new ArrayList<Integer>();
     private List<Float> strokes = new ArrayList<Float>();
@@ -33,11 +41,15 @@ public class CanvasView extends View {
     private int currentColor = Color.BLACK; // was black
     private float currentStroke = 10F;
     private Bitmap mBitmap;
+    private Bitmap newBitmap;
     private Canvas canvas;
     private Path path = new Path();
     private float mX;
     private float mY;
     private ViewStub view;
+    private int cx;
+    private int cy;
+    private Rect imageRect;
 
 
     public CanvasView(Context context, AttributeSet attrs) {
@@ -58,6 +70,18 @@ public class CanvasView extends View {
         paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setStrokeWidth(currentStroke);
 
+//        pd = new ProgressDialog(context);
+
+        newBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cat2).copy(Bitmap.Config.ARGB_8888, true);
+
+
+//        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+//        int width = windowManager.getDefaultDisplay().getWidth();
+//        int height = windowManager.getDefaultDisplay().getHeight();
+//        newBitmap = Bitmap.createScaledBitmap(mBitmap,width,height,false);
+//        MainActivity.getCanvasView().buildDrawingCache();
+//        mBitmap = Bitmap.createBitmap(MainActivity.getCanvasView().getDrawingCache());
+
 //        _paintBlur = new Paint();
 //        _paintBlur.set(paint);
 //        _paintBlur.setColor((Color.rgb(249, 80, 75)));
@@ -67,6 +91,9 @@ public class CanvasView extends View {
 
     }
 
+    public ProgressDialog getPd() {
+        return pd;
+    }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -74,6 +101,7 @@ public class CanvasView extends View {
 
         mBitmap = Bitmap.createBitmap(w,h,Bitmap.Config.ARGB_8888);
         canvas = new Canvas(mBitmap);
+        imageRect = new Rect(0, 0, w, h);
 
     }
 
@@ -95,6 +123,12 @@ public class CanvasView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        if (imageRect == null) { // I think it is always false as we are intializing it onSizeChanged
+            imageRect = new Rect(0, 0, getWidth(), getHeight());
+        }
+        if (newBitmap != null) {
+            canvas.drawBitmap(newBitmap, null, imageRect, paint);
+        }
 //        if(MainActivity.getSetGlow()) {
 //            canvas.drawARGB(255, 0, 0, 0);
 //            invalidate();
@@ -214,20 +248,45 @@ public class CanvasView extends View {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                if (!MainActivity.isFillFloodSelected()) {
                 startTouch(x, y);
+
+                } else {
+                    p1.x = (int) x;
+                    p1.y = (int) y;
+                    //canvasView.buildDrawingCache();
+
+                    final int sourceColor = newBitmap.getPixel((int) x, (int) y);
+                    final int targetColor = paint.getColor();
+//                    new TheTask(newBitmap, p1, sourceColor, targetColor).execute();
+                    canvasView.destroyDrawingCache();
+                    newBitmap = Bitmap.createBitmap(canvasView.getDrawingCache());
+                    FloodFill f = new FloodFill(newBitmap, sourceColor, targetColor);
+                    f.floodFill(p1.x, p1.y);
+                }
                 invalidate();
                 break;
+
+
             case MotionEvent.ACTION_MOVE:
-                moveTouch(x, y);
+                if (!MainActivity.isFillFloodSelected()) {
+                    moveTouch(x, y);
+                }
                 invalidate();
                 break;
+
+
             case MotionEvent.ACTION_UP:
-                paths.add(path);
-                colors.add(currentColor);
-                strokes.add(currentStroke);
+                if (!MainActivity.isFillFloodSelected()) {
+
+                    paths.add(path);
+                    colors.add(currentColor);
+                    strokes.add(currentStroke);
+                }
                 upTouch();
                 invalidate();
                 break;
+
         }
 
         return true;

@@ -1,12 +1,14 @@
 package jetsetapp.paint;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -16,31 +18,48 @@ import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 
-import java.io.FileOutputStream;
-
 public class MainActivity extends AppCompatActivity {
 
     protected static ImageButton undoButton;
     protected static ImageButton redoButton;
     protected static ImageButton clearButton;
-    private static Boolean setGlow;
-    private static CanvasView canvasView;
-    FileOutputStream fos = null;
+    protected static CanvasView canvasView;
+    private static Bitmap newBitmap;
+    private static boolean fillFloodSelected = false;
     int lastChosenColor = Color.BLACK;
-    private Bitmap saveBitMap;
-    private Canvas saveCanvas;
-    private View view;
+    ProgressDialog progressDialog;
+    Integer count;
     private Bitmap mBitmap;
     private HorizontalScrollView horizontalPaintsView;
+    private Bitmap backgroundPicture;
+
+    public static Bitmap getNewBitmap() {
+        return newBitmap;
+    }
+
+//    public static int getCanvasViewHeight() {
+//        return canvasView.getHeight();
+//    }
+//
+//    public int getWindowManagerWidth(){
+//        return getWindowManager().getDefaultDisplay().getWidth();
+//    }
+
+    public static boolean isFillFloodSelected() {
+        return fillFloodSelected;
+    }
 
     public static CanvasView getCanvasView() {
         return canvasView;
     }
 
-    public static Boolean getSetGlow() {
-        return setGlow;
-    }
+//    public static Boolean getSetGlow() {
+//        return setGlow;
+//    }
 
+    public void selectFloodFill(View v) {
+        fillFloodSelected = true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -86,15 +104,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void addPicture(View v) {
 
-        Intent mainGallery = new Intent(MainActivity.this, MainGallery.class);
-        startActivity(mainGallery);
+        new LoadViewTask().execute();
+//        Intent mainGallery = new Intent(MainActivity.this, MainGallery.class);
+//        startActivity(mainGallery);
 
     }
 
     public void setCanvasViewBackground() {
         Bundle extras = getIntent().getExtras();
         String b = extras.getString("picture");
+        newBitmap = BitmapFactory.decodeResource(getResources(), getResources().getIdentifier(b, "drawable", getPackageName())).copy(Bitmap.Config.ARGB_8888, true);
         Drawable d = getResources().getDrawable(getResources().getIdentifier(b, "drawable", getPackageName()));
+        this.backgroundPicture = BitmapFactory.decodeResource(getResources(),
+                getResources().getIdentifier(b, "drawable", getPackageName()));
         d.setBounds(0, 0, (int) (d.getIntrinsicWidth() * 0.5), (int) (d.getIntrinsicHeight() * 0.5));
 //        Drawable s = new ScaleDrawable(d, Gravity.FILL_VERTICAL, 0.50f, 0.50f);
 //        s.setLevel(10000);
@@ -115,89 +137,10 @@ public class MainActivity extends AppCompatActivity {
         canvasView.clearCanvas();
     }
 
-//    public void setColorBlue(View v){
-//       canvasView.changeColor(Color.BLUE);
-//        lastChosenColor = Color.BLUE;
-//    }
-//    public void setColorRed(View v){
-//        canvasView.changeColor(Color.RED);
-//        lastChosenColor = Color.RED;
-//    }
-//    public void setColorGreen(View v){
-//        canvasView.changeColor(Color.GREEN);
-//        lastChosenColor = Color.GREEN;
-//    }
-//    public void setColorYellow(View v){
-//        canvasView.changeColor(Color.YELLOW);
-//        lastChosenColor = Color.YELLOW;
-//    }
-//    public void setColorBlack(View v){
-//        canvasView.changeColor(Color.BLACK);
-//        lastChosenColor = Color.BLACK;
-//    }
-//    public void setColorBrown(View v){
-//        canvasView.changeColor(Color.rgb(140,70,0));
-//        lastChosenColor = Color.rgb(140,70,0);
-//    }
-//    public void setColorPink(View v){
-//        canvasView.changeColor(Color.rgb(255,0,255));
-//        lastChosenColor = Color.rgb(255,0,255);
-//    }
-//
-//
-//    public void setColorSilver(View v) {
-//        Resources res = getApplicationContext().getResources();
-//        canvasView.changeColor(res.getColor(R.color.colorSilver));
-//        lastChosenColor = res.getColor(R.color.colorSilver);
-//    }
-//
-//    public void setColorGrey(View v) {
-//        Resources res = getApplicationContext().getResources();
-//        canvasView.changeColor(res.getColor(R.color.colorGrey));
-//        lastChosenColor = res.getColor(R.color.colorGrey);
-//    }
-//
-//    public void setColorMaroon(View v) {
-//        Resources res = getApplicationContext().getResources();
-//        canvasView.changeColor(res.getColor(R.color.colorMaroon));
-//        lastChosenColor = res.getColor(R.color.colorMaroon);
-//    }
-//
-//    public void setColorOlive(View v) {
-//        Resources res = getApplicationContext().getResources();
-//        canvasView.changeColor(res.getColor(R.color.colorOlive));
-//        lastChosenColor = res.getColor(R.color.colorOlive);
-//    }
-//
-//    public void setColorLime(View v) {
-//        Resources res = getApplicationContext().getResources();
-//        canvasView.changeColor(res.getColor(R.color.colorLime));
-//        lastChosenColor = res.getColor(R.color.colorLime);
-//    }
-//
-//    public void setColorAqua(View v) {
-//        Resources res = getApplicationContext().getResources();
-//        canvasView.changeColor(res.getColor(R.color.colorAqua));
-//        lastChosenColor = res.getColor(R.color.colorAqua);
-//    }
-//
-//    public void setColorTeal(View v) {
-//        Resources res = getApplicationContext().getResources();
-//        canvasView.changeColor(res.getColor(R.color.colorTeal));
-//        lastChosenColor = res.getColor(R.color.colorTeal);
-//    }
-//
-//    public void setColorNavy(View v) {
-//        Resources res = getApplicationContext().getResources();
-//        canvasView.changeColor(res.getColor(R.color.colorNavy));
-//        lastChosenColor = res.getColor(R.color.colorNavy);
-//    }
-//
-//    public void setColorFuchsia(View v) {
-//        Resources res = getApplicationContext().getResources();
-//        canvasView.changeColor(res.getColor(R.color.colorFuchsia));
-//        lastChosenColor = res.getColor(R.color.colorFuchsia);
-//    }
+    public void doFloodFill() {
+
+//        floodFill(backgroundPicture,);
+    }
 
     public void smallButton(View v) {
         canvasView.changeStroke(3F);
@@ -253,7 +196,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     public void setGlow(View v) {
 //        BlurMaskFilter blur = new BlurMaskFilter(15, BlurMaskFilter.Blur.NORMAL);
         canvasView.paint.setShadowLayer(50, 0, 0, Color.rgb(100, 255, 255));
@@ -262,6 +204,7 @@ public class MainActivity extends AppCompatActivity {
         //canvasView.paint.setStyle(Paint.Style.FILL);
 
     }
+
     public void setColorWhite(){
         canvasView.changeColor(Color.rgb(255,255,255));
     }
@@ -277,7 +220,49 @@ public class MainActivity extends AppCompatActivity {
         canvasView.redoLastDraw();
         canvasView.invalidate();
     }
+
+    private class LoadViewTask extends AsyncTask<Void, Integer, Void> {
+
+        //Before running code in separate thread
+        @Override
+        protected void onPreExecute() {
+            //Create a new progress dialog
+            progressDialog = new ProgressDialog(MainActivity.this);
+//            //Set the progress dialog to display a horizontal progress bar
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//            //This dialog can't be canceled by pressing the back key
+            progressDialog.setCancelable(false);
+//            //Display the progress dialog
+            ProgressDialog.show(MainActivity.this, "", "Loading...");
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            Intent mainGallery = new Intent(MainActivity.this, MainGallery.class);
+            MainActivity.this.startActivity(mainGallery);
+            return null;
+        }
+
+        //Update the progress
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            //set the current progress of the progress dialog
+            progressDialog.setProgress(values[0]);
+        }
+
+        //after executing the code in the thread
+        @Override
+        protected void onPostExecute(Void result) {
+            //close the progress dialog
+            progressDialog.dismiss();
+            //initialize the View
+            setContentView(R.layout.activity_main_gallery);
+        }
+    }
 //
 
 
 }
+
