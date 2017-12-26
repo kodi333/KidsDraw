@@ -18,7 +18,7 @@ import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     protected static ImageButton undoButton;
     protected static ImageButton redoButton;
@@ -32,6 +32,13 @@ public class MainActivity extends AppCompatActivity {
     private Bitmap mBitmap;
     private HorizontalScrollView horizontalPaintsView;
     private Bitmap backgroundPicture;
+    private ImageButton eraseButton;
+    private ImageButton drawSmallButton;
+    private ImageButton drawBigButton;
+    private ImageButton drawRollerButton;
+    private ImageButton saveFileButton;
+    private ImageButton addPictureButton;
+    private ImageButton floodFillButton;
 
     public static Bitmap getNewBitmap() {
         return newBitmap;
@@ -53,13 +60,6 @@ public class MainActivity extends AppCompatActivity {
         return canvasView;
     }
 
-//    public static Boolean getSetGlow() {
-//        return setGlow;
-//    }
-
-    public void selectFloodFill(View v) {
-        fillFloodSelected = true;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +72,27 @@ public class MainActivity extends AppCompatActivity {
         undoButton = (ImageButton)findViewById(R.id.undoButton);
         redoButton = (ImageButton)findViewById(R.id.redoButton);
         clearButton = (ImageButton) findViewById(R.id.clearButton);
+
+        eraseButton = (ImageButton) findViewById(R.id.erase);
+        eraseButton.setOnClickListener(this);
+
+        drawBigButton = (ImageButton) findViewById(R.id.drawBigbutton);
+        drawBigButton.setOnClickListener(this);
+
+        drawSmallButton = (ImageButton) findViewById(R.id.drawSmallbutton);
+        drawSmallButton.setOnClickListener(this);
+
+        drawRollerButton = (ImageButton) findViewById(R.id.drawRoller);
+        drawRollerButton.setOnClickListener(this);
+
+        saveFileButton = (ImageButton) findViewById(R.id.saveFile);
+        saveFileButton.setOnClickListener(this);
+
+        addPictureButton = (ImageButton) findViewById(R.id.addPicture);
+        addPictureButton.setOnClickListener(this);
+
+        floodFillButton = (ImageButton) findViewById(R.id.floodFill);
+        floodFillButton.setOnClickListener(this);
 
         horizontalPaintsView = (HorizontalScrollView) findViewById(R.id.HorizontalScroll);
         horizontalPaintsView.setHorizontalScrollBarEnabled(false);
@@ -89,6 +110,61 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onClick(View v) {
+
+        int whiteColorValue = Color.WHITE;
+        switch (v.getId()) {
+            case R.id.erase:
+                fillFloodSelected = false;
+                setColorWhite();
+                break;
+
+            case R.id.drawSmallbutton:
+                fillFloodSelected = false;
+                canvasView.changeStroke(3F);
+                if (canvasView.getColor() == whiteColorValue) {
+                    int lastColor = lastChosenColor;
+                    canvasView.changeColor(lastColor);
+                }
+                break;
+
+            case R.id.drawBigbutton:
+                fillFloodSelected = false;
+                canvasView.changeStroke(10F);
+                if (canvasView.getColor() == whiteColorValue) {
+                    int lastColor = lastChosenColor;
+                    canvasView.changeColor(lastColor);
+                }
+                break;
+
+            case R.id.drawRoller:
+                fillFloodSelected = false;
+                canvasView.changeStroke(30F);
+                if (canvasView.getColor() == whiteColorValue) {
+                    int lastColor = lastChosenColor;
+                    canvasView.changeColor(lastColor);
+                }
+                break;
+
+            case R.id.addPicture:
+                new LoadViewTask().execute();
+                break;
+
+            case R.id.saveFile:
+                saveFile(v);
+                break;
+
+            case R.id.floodFill:
+                fillFloodSelected = true;
+                canvasView.changeStroke(0);
+                break;
+        }
+
+
+    }
+
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
@@ -100,14 +176,6 @@ public class MainActivity extends AppCompatActivity {
 //            Log.v(TAG,"Permission: "+permissions[0]+ "was "+grantResults[0]);
             //resume tasks needing this permission
         }
-    }
-
-    public void addPicture(View v) {
-
-        new LoadViewTask().execute();
-//        Intent mainGallery = new Intent(MainActivity.this, MainGallery.class);
-//        startActivity(mainGallery);
-
     }
 
     public void setCanvasViewBackground() {

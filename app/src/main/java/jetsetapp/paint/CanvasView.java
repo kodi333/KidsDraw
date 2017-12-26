@@ -11,6 +11,7 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewStub;
@@ -35,6 +36,8 @@ public class CanvasView extends View {
     private List<Path> paths = new ArrayList<Path>();
     private List<Integer> colors = new ArrayList<Integer>();
     private List<Float> strokes = new ArrayList<Float>();
+    private List<Point> points = new ArrayList<Point>();
+    private List<Point> undonePoints = new ArrayList<Point>();
     private ArrayList<Path> undonePaths = new ArrayList<Path>();
     private ArrayList<Integer> undoneColors = new ArrayList<Integer>();
     private ArrayList<Float> undoneStrokes = new ArrayList<Float>();
@@ -185,9 +188,17 @@ public class CanvasView extends View {
 
     public void undoLastDraw(){
         if(paths.size() > 0) {
+            if (points.get(points.size() - 1).x > 0) {
+                FloodFill fill = new FloodFill(newBitmap, colors.get(colors.size() - 1), Color.WHITE);
+                fill.floodFill(points.get(points.size() - 1).x, points.get(points.size() - 1).y);
+            }
             undonePaths.add(paths.remove(paths.size() - 1));
             undoneColors.add(colors.remove(colors.size() - 1));
             undoneStrokes.add(strokes.remove(strokes.size() - 1));
+            undonePoints.add(points.remove(points.size() - 1));
+//            Log.v("TAG", String.valueOf(points.get(points.size()).toString()));
+            Log.v("TAG", String.valueOf(colors.size()));
+
 
             if(paths.size() <= 0){
                 MainActivity.undoButton.setVisibility(View.INVISIBLE);
@@ -204,9 +215,14 @@ public class CanvasView extends View {
 
     public void redoLastDraw(){
         if(undonePaths.size()>0) {
+            if (undonePoints.get(undonePoints.size() - 1).x > 0) {
+                FloodFill fill = new FloodFill(newBitmap, Color.WHITE, undoneColors.get(undoneColors.size() - 1));
+                fill.floodFill(undonePoints.get(undonePoints.size() - 1).x, undonePoints.get(undonePoints.size() - 1).y);
+            }
             paths.add(undonePaths.remove(undonePaths.size()-1));
             colors.add(undoneColors.remove(undoneColors.size()-1));
             strokes.add(undoneStrokes.remove(undoneStrokes.size()-1));
+            points.add(undonePoints.remove(undonePoints.size() - 1));
 
             if(undonePaths.size() <= 0){
                 MainActivity.redoButton.setVisibility(View.INVISIBLE);
@@ -248,41 +264,44 @@ public class CanvasView extends View {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                if (!MainActivity.isFillFloodSelected()) {
-                startTouch(x, y);
-
-                } else {
+                if (MainActivity.isFillFloodSelected()) {
                     p1.x = (int) x;
                     p1.y = (int) y;
                     //canvasView.buildDrawingCache();
-
+                    paint.setColor(currentColor);
                     final int sourceColor = newBitmap.getPixel((int) x, (int) y);
                     final int targetColor = paint.getColor();
 //                    new TheTask(newBitmap, p1, sourceColor, targetColor).execute();
                     canvasView.destroyDrawingCache();
                     newBitmap = Bitmap.createBitmap(canvasView.getDrawingCache());
-                    FloodFill f = new FloodFill(newBitmap, sourceColor, targetColor);
-                    f.floodFill(p1.x, p1.y);
+                    FloodFill fill = new FloodFill(newBitmap, sourceColor, targetColor);
+                    fill.floodFill(p1.x, p1.y);
+                } else {
+                    p1.x = 0;
+                    p1.y = 0;
                 }
+                startTouch(x, y);
                 invalidate();
                 break;
 
 
             case MotionEvent.ACTION_MOVE:
-                if (!MainActivity.isFillFloodSelected()) {
+//                if (!MainActivity.isFillFloodSelected()) {
                     moveTouch(x, y);
-                }
+//                }
                 invalidate();
                 break;
 
 
             case MotionEvent.ACTION_UP:
-                if (!MainActivity.isFillFloodSelected()) {
-
-                    paths.add(path);
-                    colors.add(currentColor);
-                    strokes.add(currentStroke);
-                }
+//                if (!MainActivity.isFillFloodSelected()) {
+//
+//                    strokes.add(currentStroke);
+//                }
+                points.add(new Point(p1.x, p1.y));
+                strokes.add(currentStroke);
+                paths.add(path);
+                colors.add(currentColor);
                 upTouch();
                 invalidate();
                 break;

@@ -65,7 +65,7 @@
             android:layout_toLeftOf="@+id/addPicture"
             android:layout_toStartOf="@+id/addPicture"
             android:background="@drawable/bucket"
-            android:onClick="selectFloodFill"
+            android:onClick=""
             android:scaleType="fitStart" />
 
         <ImageButton
@@ -74,7 +74,7 @@
             android:layout_toLeftOf="@+id/erase"
             android:layout_toStartOf="@+id/erase"
             android:background="@drawable/dog1"
-            android:onClick="addPicture"
+            android:onClick=""
             android:scaleType="fitStart" />
 
         <ImageButton
@@ -83,7 +83,7 @@
             android:layout_toLeftOf="@+id/drawSmallbutton"
             android:layout_toStartOf="@+id/drawSmallbutton"
             android:background="@drawable/erase"
-            android:onClick="erase"
+            android:onClick=""
             android:scaleType="fitStart" />
 
         <ImageButton
@@ -92,7 +92,7 @@
             android:layout_toLeftOf="@+id/drawBigbutton"
             android:layout_toStartOf="@+id/drawBigbutton"
             android:background="@drawable/pencil"
-            android:onClick="smallButton"
+            android:onClick=""
             android:scaleType="fitStart" />
 
         <ImageButton
@@ -101,7 +101,7 @@
             android:layout_toLeftOf="@+id/drawRoller"
             android:layout_toStartOf="@+id/drawRoller"
             android:background="@drawable/marker2"
-            android:onClick="bigButton"
+            android:onClick=""
             android:scaleType="fitStart" />
 
         <ImageButton
@@ -110,7 +110,7 @@
             android:layout_toLeftOf="@+id/saveFile"
             android:layout_toStartOf="@+id/saveFile"
             android:background="@drawable/roll"
-            android:onClick="drawRoller"
+            android:onClick=""
             android:scaleType="fitStart" />
 
         <ImageButton
@@ -120,7 +120,7 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/save"
             android:ems="1"
-            android:onClick="saveFile"
+            android:onClick=""
             android:scaleType="fitStart" />
 
 
