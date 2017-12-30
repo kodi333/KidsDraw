@@ -3,7 +3,6 @@ package jetsetapp.paint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -42,6 +41,7 @@ public class CanvasView extends View {
     private int currentColor = Color.BLACK; // was black
     private float currentStroke = 10F;
     private Bitmap mBitmap;
+
     private Bitmap newBitmap;
     private Canvas canvas;
     private Path path = new Path();
@@ -52,11 +52,12 @@ public class CanvasView extends View {
     private int cy;
     private Rect imageRect;
     private Integer temporaryColor;
-    private List<Integer> fillColors = new ArrayList<Integer>();
+    private List<Integer> sourceFillColors = new ArrayList<Integer>();
     private List<Integer> undoneFillColors = new ArrayList<Integer>();
+    private List<Integer> targetFillColors = new ArrayList<Integer>();
     private int fillSourceColor;
     private Bitmap fillBitmap;
-
+    private List<Integer> undoneTargetFillColors = new ArrayList<Integer>();
 
     public CanvasView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -64,8 +65,6 @@ public class CanvasView extends View {
 
         setFocusable(true);
         setFocusableInTouchMode(true);
-
-        //setLayerType(LAYER_TYPE_SOFTWARE, paint);
 
         paint.setAntiAlias(true);
         paint.setDither(true);
@@ -77,23 +76,12 @@ public class CanvasView extends View {
 
 //        pd = new ProgressDialog(context);
 
-        newBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cat2).copy(Bitmap.Config.ARGB_8888, true);
+//        newBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cat13).copy(Bitmap.Config.ARGB_8888, true);
 
+    }
 
-//        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-//        int width = windowManager.getDefaultDisplay().getWidth();
-//        int height = windowManager.getDefaultDisplay().getHeight();
-//        newBitmap = Bitmap.createScaledBitmap(mBitmap,width,height,false);
-//        MainActivity.getCanvasView().buildDrawingCache();
-//        mBitmap = Bitmap.createBitmap(MainActivity.getCanvasView().getDrawingCache());
-
-//        _paintBlur = new Paint();
-//        _paintBlur.set(paint);
-//        _paintBlur.setColor((Color.rgb(249, 80, 75)));
-//        _paintBlur.setStrokeWidth(currentStroke + 10F);
-//        //_paintBlur.setShadowLayer(50,0,0,(Color.rgb(249, 80, 75)));
-//        _paintBlur.setMaskFilter(new BlurMaskFilter(15, BlurMaskFilter.Blur.NORMAL));
-
+    public void setNewBitmap(Bitmap newBitmap) {
+        this.newBitmap = newBitmap;
     }
 
     @Override
@@ -133,29 +121,15 @@ public class CanvasView extends View {
             newBitmap = Bitmap.createScaledBitmap(newBitmap, getWidth(), getHeight(), false);
             canvas.drawBitmap(newBitmap, null, imageRect, paint);
         }
-//        if(MainActivity.getSetGlow()) {
-//            canvas.drawARGB(255, 0, 0, 0);
-//            invalidate();
-//        }
-//        else {
-//            canvas.drawARGB(255, 255, 255, 255);
-//            invalidate();
-//        }
 
         for (int x = 0; x < paths.size(); x++) {
             paint.setColor(colors.get(x));
             paint.setStrokeWidth(strokes.get(x));
             canvas.drawPath(paths.get(x), paint);
-            Log.v("TAG", "drawing loop");
         }
         paint.setColor(currentColor);
         paint.setStrokeWidth(currentStroke);
         canvas.drawPath(path, paint);
-
-
-        // Additional effect path
-//        canvas.drawPath(path, _paintBlur);
-
 
     }
 
@@ -186,30 +160,20 @@ public class CanvasView extends View {
 
     public void undoLastDraw(){
         if (points.size() > 0) {
-            Log.v("TAG", "X: " + String.valueOf(points.get(points.size() - 1).x));
             if (points.get(points.size() - 1).x > 0 && points.get(points.size() - 1).y > 0) {
-                int sourceColor = fillColors.size() - 1 < 0 ? Color.WHITE : fillColors.get(fillColors.size() - 1);
-                FloodFill fill = new FloodFill(newBitmap, newBitmap.getPixel(points.get(points.size() - 1).x, points.get(points.size() - 1).y), sourceColor);
+                int targetColor = sourceFillColors.size() - 1 < 0 ? Color.WHITE : sourceFillColors.get(sourceFillColors.size() - 1);
+                FloodFill fill = new FloodFill(newBitmap, newBitmap.getPixel(points.get(points.size() - 1).x, points.get(points.size() - 1).y), targetColor);
                 // Above I NEED TO PUT TARGET COLOR FROM Target Color Array
                 fill.floodFill(points.get(points.size() - 1).x, points.get(points.size() - 1).y);
                 undonePoints.add(points.remove(points.size() - 1));
-                undoneFillColors.add(fillColors.remove(fillColors.size() - 1));
+                undoneFillColors.add(sourceFillColors.remove(sourceFillColors.size() - 1));
+                undoneTargetFillColors.add(targetFillColors.remove(targetFillColors.size() - 1));
             } else {
-                Log.v("TAG", "Removing stroke");
-                Log.v("TAG", "Paths size before " + paths.size());
-                Log.v("TAG", "Points size before " + points.size());
-
                 undonePaths.add(paths.remove(paths.size() - 1));
                 undoneColors.add(colors.remove(colors.size() - 1));
                 undoneStrokes.add(strokes.remove(strokes.size() - 1));
                 undonePoints.add(points.remove(points.size() - 1));
-                Log.v("TAG", "Paths size after " + paths.size());
-                Log.v("TAG", "strokes size after " + strokes.size());
-                Log.v("TAG", "points size after " + points.size());
             }
-//            Log.v("TAG", String.valueOf(points.get(points.size()).toString()));
-//            Log.v("TAG", String.valueOf(colors.size()));
-
 
             if (points.size() <= 0) {
                 MainActivity.undoButton.setVisibility(View.INVISIBLE);
@@ -224,27 +188,32 @@ public class CanvasView extends View {
     }
 
     public void redoLastDraw(){
-        if(undonePaths.size()>0) {
+        if (undonePoints.size() > 0) {
+            Log.v("TAG", "undonePaths.size>0");
             if (undonePoints.get(undonePoints.size() - 1).x > 0 && undonePoints.get(undonePoints.size() - 1).y > 0) {
-                int sourceColor = undoneColors.size() - 1 < 0 ? Color.WHITE : undoneColors.get(undoneColors.size() - 1);
-                FloodFill fill = new FloodFill(newBitmap, sourceColor, undoneColors.get(undoneColors.size() - 1));
-
+                Log.v("TAG", "undonePaths.size.x>0");
+                int targetColor = undoneTargetFillColors.get(undoneTargetFillColors.size() - 1);// < 0 ? Color.WHITE : undoneFillColors.get(undoneFillColors.size() - 1);
+//                FloodFill fill = new FloodFill(newBitmap, newBitmap.getPixel(undonePoints.get(undonePoints.size() - 1).x, undonePoints.get(undonePoints.size() - 1).y), targetColor);
+                FloodFill fill = new FloodFill(newBitmap, newBitmap.getPixel(undonePoints.get(undonePoints.size() - 1).x, undonePoints.get(undonePoints.size() - 1).y), targetColor);
                 fill.floodFill(undonePoints.get(undonePoints.size() - 1).x, undonePoints.get(undonePoints.size() - 1).y);
+                points.add(undonePoints.remove(undonePoints.size() - 1));
+                sourceFillColors.add(undoneFillColors.remove(undoneFillColors.size() - 1));
+                targetFillColors.add(undoneTargetFillColors.remove(undoneTargetFillColors.size() - 1));
+            } else {
+                paths.add(undonePaths.remove(undonePaths.size() - 1));
+                colors.add(undoneColors.remove(undoneColors.size() - 1));
+                strokes.add(undoneStrokes.remove(undoneStrokes.size() - 1));
+                points.add(undonePoints.remove(undonePoints.size() - 1));
             }
-            paths.add(undonePaths.remove(undonePaths.size()-1));
-            colors.add(undoneColors.remove(undoneColors.size()-1));
-            strokes.add(undoneStrokes.remove(undoneStrokes.size()-1));
-            points.add(undonePoints.remove(undonePoints.size() - 1));
-
-            if(undonePaths.size() <= 0){
+            if (undonePoints.size() <= 0) {
                 MainActivity.redoButton.setVisibility(View.INVISIBLE);
             }
 
-            if(undonePaths.size() > 0){
+            if (undonePoints.size() > 0) {
                 MainActivity.redoButton.setVisibility(View.VISIBLE);
             }
 
-            if(paths.size() > 0){
+            if (points.size() > 0) {
                 MainActivity.undoButton.setVisibility(View.VISIBLE);
             }
         }
@@ -255,7 +224,7 @@ public class CanvasView extends View {
         path.reset();
         paths.clear();
         undonePaths.clear();
-        fillColors.clear();
+        sourceFillColors.clear();
         undoneFillColors.clear();
         points.clear();
         undonePoints.clear();
@@ -263,13 +232,16 @@ public class CanvasView extends View {
         undoneColors.clear();
         strokes.clear();
         undoneStrokes.clear();
+        targetFillColors.clear();
+        undoneTargetFillColors.clear();
 
         if (imageRect == null) { // I think it is always false as we are initializing it onSizeChanged
             imageRect = new Rect(0, 0, getWidth(), getHeight());
         }
 
-        newBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cat2).copy(Bitmap.Config.ARGB_8888, true);
-        canvas.drawBitmap(newBitmap, null, imageRect, paint);
+        newBitmap = MainActivity.getNewBitmap();
+//        newBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cat13).copy(Bitmap.Config.ARGB_8888, true);
+        if (newBitmap != null) canvas.drawBitmap(newBitmap, null, imageRect, paint);
         path = new Path();
 
 
@@ -294,24 +266,20 @@ public class CanvasView extends View {
                 if (MainActivity.isFillFloodSelected()) {
                     p1.x = (int) x;
                     p1.y = (int) y;
-                    //canvasView.buildDrawingCache();
-//                    paint.setColor(currentColor);
-                    fillSourceColor = newBitmap.getPixel((int) x, (int) y);
 
-//                    if(fillSourceColor == Color.WHITE){
-//                        if(paths.size()>0) {
-//                            fillColors.add(Color.WHITE);
-//                            // fillFloodTargetColor.add(Color.WHITE);
-////                            // I NEED TO ADD SEPARATE Color Array for target color FillFlood
-//                        }
-//
-//                    }
-                    //fillFloodTargetColor.add(newBitmap.getPixel((int) x, (int) y););
-                    final int targetColor = currentColor;
+                    fillSourceColor = newBitmap.getPixel((int) x, (int) y);
+                    // Skip coloring bitmap character (cat) borders, so skip if color is black -16514555 color
+                    if (fillSourceColor != -16514555 && fillSourceColor != -16777216) {
+                        Log.v("TAG", String.format("#%06X", (0xFFFFFF & fillSourceColor)));
+                        Log.v("TAG", String.valueOf(fillSourceColor));
+//                    if(fillSourceColor != Color.BLACK){ // Ignore black image borders
+                        final int targetColor = currentColor;
 //                    canvasView.destroyDrawingCache();
 //                    newBitmap = Bitmap.createBitmap(canvasView.getDrawingCache());
-                    FloodFill fill = new FloodFill(newBitmap, fillSourceColor, targetColor);
-                    fill.floodFill(p1.x, p1.y);
+                        FloodFill fill = new FloodFill(newBitmap, fillSourceColor, targetColor);
+                        fill.floodFill(p1.x, p1.y);
+                    }
+//                }
                 } else {
                     p1.x = 0;
                     p1.y = 0;
@@ -341,7 +309,8 @@ public class CanvasView extends View {
                     upTouch();
                 } else {
                     points.add(new Point(p1.x, p1.y));
-                    fillColors.add(fillSourceColor);
+                    sourceFillColors.add(fillSourceColor);
+                    targetFillColors.add(currentColor);
                 }
 
                 //         Show undo redo buttons

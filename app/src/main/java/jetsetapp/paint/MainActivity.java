@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -182,14 +181,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Bundle extras = getIntent().getExtras();
         String b = extras.getString("picture");
         newBitmap = BitmapFactory.decodeResource(getResources(), getResources().getIdentifier(b, "drawable", getPackageName())).copy(Bitmap.Config.ARGB_8888, true);
-        Drawable d = getResources().getDrawable(getResources().getIdentifier(b, "drawable", getPackageName()));
-        this.backgroundPicture = BitmapFactory.decodeResource(getResources(),
-                getResources().getIdentifier(b, "drawable", getPackageName()));
-        d.setBounds(0, 0, (int) (d.getIntrinsicWidth() * 0.5), (int) (d.getIntrinsicHeight() * 0.5));
+//        Drawable d = getResources().getDrawable(getResources().getIdentifier(b, "drawable", getPackageName()));
+//        this.backgroundPicture = BitmapFactory.decodeResource(getResources(),
+//                getResources().getIdentifier(b, "drawable", getPackageName()));
+//        d.setBounds(0, 0, (int) (d.getIntrinsicWidth() * 0.5), (int) (d.getIntrinsicHeight() * 0.5));
 //        Drawable s = new ScaleDrawable(d, Gravity.FILL_VERTICAL, 0.50f, 0.50f);
 //        s.setLevel(10000);
 //
-        canvasView.setBackground(d);
+        canvasView.setNewBitmap(newBitmap);
     }
 
     public void setCanvasColor(View v) {

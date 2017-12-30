@@ -208,9 +208,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/imageButtonBrown"
                 android:layout_toStartOf="@+id/imageButtonBrown"
-                android:background="@drawable/c000000"
+                android:background="@drawable/c000001"
                 android:onClick="setCanvasColor"
-                android:tag="#000000" />
+                android:tag="#000001" />
 
             <ImageButton
                 android:id="@+id/imageButtonSilver"

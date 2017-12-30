@@ -55,12 +55,12 @@ public class FloodFill {
         return tolerance;
     }
 
-    public void setTolerance(int value) {
-        tolerance = new int[]{value, value, value};
-    }
-
     public void setTolerance(int[] value) {
         tolerance = value;
+    }
+
+    public void setTolerance(int value) {
+        tolerance = new int[]{value, value, value};
     }
 
     public Bitmap getImage() {
@@ -219,8 +219,8 @@ public class FloodFill {
 
     // Sees if a pixel is within the color tolerance range.
     protected boolean CheckPixel(int px) {
-        int red = (pixels[px] >>> 16) & 0xff;
-        int green = (pixels[px] >>> 8) & 0xff;
+        int red = (pixels[px] >>> 16) & 0xff;//16
+        int green = (pixels[px] >>> 8) & 0xff;//8
         int blue = pixels[px] & 0xff;
 
         return (red >= (startColor[0] - tolerance[0])
