@@ -7,6 +7,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int lastChosenColor = Color.BLACK;
     ProgressDialog progressDialog;
     Integer count;
+    PorterDuffColorFilter greenFilter =
+            new PorterDuffColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
     private Bitmap mBitmap;
     private HorizontalScrollView horizontalPaintsView;
     private Bitmap backgroundPicture;
@@ -38,10 +42,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton saveFileButton;
     private ImageButton addPictureButton;
     private ImageButton floodFillButton;
-
-    public static Bitmap getNewBitmap() {
-        return newBitmap;
-    }
+    private ImageButton[] btn = new ImageButton[7];
+    private ImageButton btn_unfocus;
+    private int[] btn_id = {R.id.floodFill, R.id.addPicture, R.id.erase, R.id.drawSmallbutton, R.id.drawBigbutton, R.id.drawRoller, R.id.saveFile};
+    private float buttonUnfocusTransparency = 0.65f;
 
 //    public static int getCanvasViewHeight() {
 //        return canvasView.getHeight();
@@ -51,6 +55,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        return getWindowManager().getDefaultDisplay().getWidth();
 //    }
 
+    public static Bitmap getNewBitmap() {
+        return newBitmap;
+    }
+
     public static boolean isFillFloodSelected() {
         return fillFloodSelected;
     }
@@ -58,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static CanvasView getCanvasView() {
         return canvasView;
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,16 +103,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         horizontalPaintsView = (HorizontalScrollView) findViewById(R.id.HorizontalScroll);
         horizontalPaintsView.setHorizontalScrollBarEnabled(false);
 
-        if (MainGallery.isPictureChosen()) {
+        // Set background to all buttons
 
+
+        for (int i = 0; i < btn.length; i++) {
+            btn[i] = (ImageButton) findViewById(btn_id[i]);
+            btn[i].getBackground().clearColorFilter();
+//            btn[i].setAlpha(buttonUnfocusTransparency);
+            btn[i].setOnClickListener(this);
+        }
+
+        btn_unfocus = btn[0];
+
+        if (MainGallery.isPictureChosen()) {
             setCanvasViewBackground();
         }
+
+
 //         Disable hardware acceleration for shadow color o work
 
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
 //            canvasView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 //        }
 
+    }
+
+    private void setFocus(ImageButton btn_unfocus, ImageButton btn_focus) {
+//        btn_unfocus.setAlpha(buttonUnfocusTransparency);
+//        btn_unfocus.setHovered(false);
+        btn_unfocus.getBackground().clearColorFilter(); //.setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
+        btn_focus.getBackground().setColorFilter(0x25990000, PorterDuff.Mode.DARKEN);
+//        btn_focus.setAlpha(1f);
+//        btn_focus.setHovered(true);
+        this.btn_unfocus = btn_focus;
     }
 
     @Override
@@ -115,11 +145,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.erase:
                 fillFloodSelected = false;
+                setFocus(btn_unfocus, (ImageButton) findViewById(v.getId()));
                 setColorWhite();
                 break;
 
             case R.id.drawSmallbutton:
                 fillFloodSelected = false;
+                setFocus(btn_unfocus, (ImageButton) findViewById(v.getId()));
                 canvasView.changeStroke(3F);
                 if (canvasView.getColor() == whiteColorValue) {
                     int lastColor = lastChosenColor;
@@ -129,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.drawBigbutton:
                 fillFloodSelected = false;
+                setFocus(btn_unfocus, (ImageButton) findViewById(v.getId()));
                 canvasView.changeStroke(10F);
                 if (canvasView.getColor() == whiteColorValue) {
                     int lastColor = lastChosenColor;
@@ -138,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.drawRoller:
                 fillFloodSelected = false;
+                setFocus(btn_unfocus, (ImageButton) findViewById(v.getId()));
                 canvasView.changeStroke(30F);
                 if (canvasView.getColor() == whiteColorValue) {
                     int lastColor = lastChosenColor;
@@ -147,13 +181,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.addPicture:
                 new LoadViewTask().execute();
+                setFocus(btn_unfocus, (ImageButton) findViewById(v.getId()));
                 break;
 
             case R.id.saveFile:
+                setFocus(btn_unfocus, (ImageButton) findViewById(v.getId()));
                 saveFile(v);
                 break;
 
             case R.id.floodFill:
+                setFocus(btn_unfocus, (ImageButton) findViewById(v.getId()));
                 fillFloodSelected = true;
                 canvasView.changeStroke(0);
                 break;

@@ -14,7 +14,7 @@ import java.util.Queue;
 public class FloodFill {
 
     protected Bitmap image = null;
-    protected int[] tolerance = new int[]{0, 0, 0};
+    protected int[] tolerance = new int[]{15, 15, 15};
     protected int width = 0;
     protected int height = 0;
     protected int[] pixels = null;
@@ -22,6 +22,8 @@ public class FloodFill {
     protected int[] startColor = new int[]{0, 0, 0};
     protected boolean[] pixelsChecked;
     protected Queue<FloodFillRange> ranges;
+    private boolean skipFill;
+
 
     // Construct using an image and a copy will be made to fill into,
     // Construct with BufferedImage and flood fill will write directly to
@@ -32,6 +34,7 @@ public class FloodFill {
 
     public FloodFill(Bitmap img, int targetColor, int newColor) {
         useImage(img);
+        skipFill = (targetColor == -16514555 || targetColor == -16777216);
 
         setFillColor(newColor);
         setTargetColor(targetColor);
@@ -55,12 +58,12 @@ public class FloodFill {
         return tolerance;
     }
 
-    public void setTolerance(int[] value) {
-        tolerance = value;
-    }
-
     public void setTolerance(int value) {
         tolerance = new int[]{value, value, value};
+    }
+
+    public void setTolerance(int[] value) {
+        tolerance = value;
     }
 
     public Bitmap getImage() {
@@ -105,55 +108,57 @@ public class FloodFill {
     // color.
     // int x, int y: The starting coords for the fill
     public void floodFill(int x, int y) {
-        // Setup
-        prepare();
+        if (!skipFill) {
+            // Setup
+            prepare();
 
-        if (startColor[0] == 0) {
-            // ***Get starting color.
-            int startPixel = pixels[(width * y) + x];
-            startColor[0] = (startPixel >> 16) & 0xff;
-            startColor[1] = (startPixel >> 8) & 0xff;
-            startColor[2] = startPixel & 0xff;
-        }
-
-        // ***Do first call to floodfill.
-        LinearFill(x, y);
-
-        // ***Call floodfill routine while floodfill ranges still exist on the
-        // queue
-        FloodFillRange range;
-
-        while (ranges.size() > 0) {
-            // **Get Next Range Off the Queue
-            range = ranges.remove();
-
-            // **Check Above and Below Each Pixel in the Floodfill Range
-            int downPxIdx = (width * (range.Y + 1)) + range.startX;
-            int upPxIdx = (width * (range.Y - 1)) + range.startX;
-            int upY = range.Y - 1;// so we can pass the y coord by ref
-            int downY = range.Y + 1;
-
-            for (int i = range.startX; i <= range.endX; i++) {
-                // *Start Fill Upwards
-                // if we're not above the top of the bitmap and the pixel above
-                // this one is within the color tolerance
-                if (range.Y > 0 && (!pixelsChecked[upPxIdx])
-                        && CheckPixel(upPxIdx))
-                    LinearFill(i, upY);
-
-                // *Start Fill Downwards
-                // if we're not below the bottom of the bitmap and the pixel
-                // below this one is within the color tolerance
-                if (range.Y < (height - 1) && (!pixelsChecked[downPxIdx])
-                        && CheckPixel(downPxIdx))
-                    LinearFill(i, downY);
-
-                downPxIdx++;
-                upPxIdx++;
+            if (startColor[0] == 0) {
+                // ***Get starting color.
+                int startPixel = pixels[(width * y) + x];
+                startColor[0] = (startPixel >> 16) & 0xff;
+                startColor[1] = (startPixel >> 8) & 0xff;
+                startColor[2] = startPixel & 0xff;
             }
-        }
 
-        image.setPixels(pixels, 0, width, 1, 1, width - 1, height - 1);
+            // ***Do first call to floodfill.
+            LinearFill(x, y);
+
+            // ***Call floodfill routine while floodfill ranges still exist on the
+            // queue
+            FloodFillRange range;
+
+            while (ranges.size() > 0) {
+                // **Get Next Range Off the Queue
+                range = ranges.remove();
+
+                // **Check Above and Below Each Pixel in the Floodfill Range
+                int downPxIdx = (width * (range.Y + 1)) + range.startX;
+                int upPxIdx = (width * (range.Y - 1)) + range.startX;
+                int upY = range.Y - 1;// so we can pass the y coord by ref
+                int downY = range.Y + 1;
+
+                for (int i = range.startX; i <= range.endX; i++) {
+                    // *Start Fill Upwards
+                    // if we're not above the top of the bitmap and the pixel above
+                    // this one is within the color tolerance
+                    if (range.Y > 0 && (!pixelsChecked[upPxIdx])
+                            && CheckPixel(upPxIdx))
+                        LinearFill(i, upY);
+
+                    // *Start Fill Downwards
+                    // if we're not below the bottom of the bitmap and the pixel
+                    // below this one is within the color tolerance
+                    if (range.Y < (height - 1) && (!pixelsChecked[downPxIdx])
+                            && CheckPixel(downPxIdx))
+                        LinearFill(i, downY);
+
+                    downPxIdx++;
+                    upPxIdx++;
+                }
+            }
+
+            image.setPixels(pixels, 0, width, 1, 1, width - 1, height - 1);
+        }
     }
 
     // Finds the furthermost left and right boundaries of the fill area

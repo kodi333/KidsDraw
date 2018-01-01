@@ -269,16 +269,16 @@ public class CanvasView extends View {
 
                     fillSourceColor = newBitmap.getPixel((int) x, (int) y);
                     // Skip coloring bitmap character (cat) borders, so skip if color is black -16514555 color
-                    if (fillSourceColor != -16514555 && fillSourceColor != -16777216) {
-                        Log.v("TAG", String.format("#%06X", (0xFFFFFF & fillSourceColor)));
-                        Log.v("TAG", String.valueOf(fillSourceColor));
+//                    if (fillSourceColor != -16514555 && fillSourceColor != -16777216) {
+//                        Log.v("TAG", String.format("#%06X", (0xFFFFFF & fillSourceColor)));
+//                        Log.v("TAG", String.valueOf(fillSourceColor));
 //                    if(fillSourceColor != Color.BLACK){ // Ignore black image borders
                         final int targetColor = currentColor;
 //                    canvasView.destroyDrawingCache();
 //                    newBitmap = Bitmap.createBitmap(canvasView.getDrawingCache());
                         FloodFill fill = new FloodFill(newBitmap, fillSourceColor, targetColor);
                         fill.floodFill(p1.x, p1.y);
-                    }
+//                    }
 //                }
                 } else {
                     p1.x = 0;

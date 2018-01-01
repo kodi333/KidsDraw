@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Kids Draw</string>
+    <string name="app_name">Kids Drawing</string>
     <string name="switch_on">Glow</string>
     <string name="switch_off">Normal</string>
 </resources>
