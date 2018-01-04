@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main_gallery"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/cartoon_sky"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="jetsetapp.paint.CatGallery">
+
+
+    <ScrollView
+        android:id="@+id/pic_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_menu">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/cat15"
+                        style="@style/galleryIcon"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:onClick="setBackground"
+                        android:src="@drawable/cat15"
+                        android:tag="cat15" />
+
+                    <ImageView
+                        android:id="@+id/cat9"
+                        style="@style/galleryIcon"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:onClick="setBackground"
+                        android:src="@drawable/cat9"
+                        android:tag="cat9" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/cat4"
+                        style="@style/galleryIcon"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:onClick="setBackground"
+                        android:src="@drawable/cat4"
+                        android:tag="cat4" />
+
+                    <ImageView
+                        android:id="@+id/cat3"
+                        style="@style/galleryIcon"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:onClick="setBackground"
+                        android:src="@drawable/cat3"
+                        android:tag="cat3" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/cat12"
+                        style="@style/galleryIcon"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:onClick="setBackground"
+                        android:src="@drawable/cat12"
+                        android:tag="cat12" />
+
+                    <ImageView
+                        android:id="@+id/cat2"
+                        style="@style/galleryIcon"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:onClick="setBackground"
+                        android:src="@drawable/cat2"
+                        android:tag="cat2" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/cat5"
+                        style="@style/galleryIcon"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:onClick="setBackground"
+                        android:src="@drawable/cat5"
+                        android:tag="cat5" />
+
+                    <ImageView
+                        android:id="@+id/cat6"
+                        style="@style/galleryIcon"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:onClick="setBackground"
+                        android:src="@drawable/cat6"
+                        android:tag="cat6" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/cat8"
+                        style="@style/galleryIcon"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:onClick="setBackground"
+                        android:src="@drawable/cat8"
+                        android:tag="cat8" />
+
+                    <ImageView
+                        android:id="@+id/cat7"
+                        style="@style/galleryIcon"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:onClick="setBackground"
+                        android:src="@drawable/cat7"
+                        android:tag="cat7" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/cat16"
+                        style="@style/galleryIcon"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:onClick="setBackground"
+                        android:src="@drawable/cat16"
+                        android:tag="cat16" />
+
+                    <ImageView
+                        android:id="@+id/cat10"
+                        style="@style/galleryIcon"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:onClick="setBackground"
+                        android:src="@drawable/cat10"
+                        android:tag="cat10" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/cat14"
+                        style="@style/galleryIcon"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:onClick="setBackground"
+                        android:src="@drawable/cat14"
+                        android:tag="cat14" />
+
+                    <ImageView
+                        android:id="@+id/cat13"
+                        style="@style/galleryIcon"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:onClick="setBackground"
+                        android:src="@drawable/cat13"
+                        android:tag="cat13" />
+
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/bottom_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/dogs"
+            style="@style/colorButton"
+            android:layout_gravity="left"
+            android:layout_weight="0.33"
+            app:srcCompat="@drawable/dog1" />
+
+        <ImageButton
+            android:id="@+id/cats"
+            style="@style/colorButton"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.33"
+            android:tag="cats"
+            app:srcCompat="@drawable/cat2" />
+
+        <ImageButton
+            android:id="@+id/other"
+            style="@style/colorButton"
+            android:layout_gravity="right"
+            android:layout_weight="0.33"
+            android:tag="other"
+            app:srcCompat="@drawable/dog13" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

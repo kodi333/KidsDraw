@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btn_unfocus = btn[0];
 
-        if (MainGallery.isPictureChosen()) {
+        if (CatGallery.isPictureChosen()) {
             setCanvasViewBackground();
         }
 
@@ -344,7 +344,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         protected Void doInBackground(Void... params) {
 
-            Intent mainGallery = new Intent(MainActivity.this, MainGallery.class);
+            Intent mainGallery = new Intent(MainActivity.this, CatGallery.class);
             MainActivity.this.startActivity(mainGallery);
             return null;
         }
@@ -362,7 +362,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //close the progress dialog
             progressDialog.dismiss();
             //initialize the View
-            setContentView(R.layout.activity_main_gallery);
+            setContentView(R.layout.activity_cat_gallery);
         }
     }
 //

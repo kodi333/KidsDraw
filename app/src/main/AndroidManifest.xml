@@ -25,7 +25,7 @@
         </activity>
 
         <activity
-            android:name=".MainGallery"
+            android:name=".CatGallery"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:hardwareAccelerated="false"
             android:screenOrientation="portrait">
@@ -33,6 +33,22 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name=".DogGallery"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:hardwareAccelerated="false"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".OtherGallery"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:hardwareAccelerated="false"
+            android:screenOrientation="portrait">
 
         </activity>
     </application>
