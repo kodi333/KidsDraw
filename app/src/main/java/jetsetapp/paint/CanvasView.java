@@ -1,7 +1,9 @@
 package jetsetapp.paint;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -9,11 +11,15 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewStub;
+import android.widget.Button;
 
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -38,7 +44,7 @@ public class CanvasView extends View {
     private ArrayList<Path> undonePaths = new ArrayList<Path>();
     private ArrayList<Integer> undoneColors = new ArrayList<Integer>();
     private ArrayList<Float> undoneStrokes = new ArrayList<Float>();
-    private int currentColor = Color.BLACK; // was black
+    private int currentColor = MainActivity.myBlack; // was black
     private float currentStroke = 10F;
     private Bitmap mBitmap;
 
@@ -68,7 +74,7 @@ public class CanvasView extends View {
 
         paint.setAntiAlias(true);
         paint.setDither(true);
-        paint.setColor(Color.BLACK); // BLACK
+        paint.setColor(MainActivity.myBlack); // BLACK
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.ROUND);
@@ -221,39 +227,71 @@ public class CanvasView extends View {
 
     public void clearCanvas() {
 
-        path.reset();
-        paths.clear();
-        undonePaths.clear();
-        sourceFillColors.clear();
-        undoneFillColors.clear();
-        points.clear();
-        undonePoints.clear();
-        colors.clear();
-        undoneColors.clear();
-        strokes.clear();
-        undoneStrokes.clear();
-        targetFillColors.clear();
-        undoneTargetFillColors.clear();
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        path.reset();
+                        paths.clear();
+                        undonePaths.clear();
+                        sourceFillColors.clear();
+                        undoneFillColors.clear();
+                        points.clear();
+                        undonePoints.clear();
+                        colors.clear();
+                        undoneColors.clear();
+                        strokes.clear();
+                        undoneStrokes.clear();
+                        targetFillColors.clear();
+                        undoneTargetFillColors.clear();
 
-        if (imageRect == null) { // I think it is always false as we are initializing it onSizeChanged
-            imageRect = new Rect(0, 0, getWidth(), getHeight());
-        }
+                        if (imageRect == null) {
+                            imageRect = new Rect(0, 0, getWidth(), getHeight());
+                        }
 
-        newBitmap = MainActivity.getNewBitmap();
-//        newBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cat13).copy(Bitmap.Config.ARGB_8888, true);
-        if (newBitmap != null) canvas.drawBitmap(newBitmap, null, imageRect, paint);
-        path = new Path();
+                        newBitmap = MainActivity.getNewBitmap();
+                        if (newBitmap != null) canvas.drawBitmap(newBitmap, null, imageRect, paint);
+                        path = new Path();
 
 
-        if (points.size() <= 0) {
-            MainActivity.undoButton.setVisibility(View.INVISIBLE);
-            MainActivity.clearButton.setVisibility(View.INVISIBLE);
-        }
+                        if (points.size() <= 0) {
+                            MainActivity.undoButton.setVisibility(View.INVISIBLE);
+                            MainActivity.clearButton.setVisibility(View.INVISIBLE);
+                        }
 //
-        if (undonePoints.size() <= 0) {
-            MainActivity.redoButton.setVisibility(View.INVISIBLE);
-        }
-        invalidate();
+                        if (undonePoints.size() <= 0) {
+                            MainActivity.redoButton.setVisibility(View.INVISIBLE);
+                        }
+                        invalidate();
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        break;
+                }
+            }
+        };
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+//        View layout = inflater.inflate(R.layout.about, (ViewGroup)findViewById(R.id.root));
+        AlertDialog alertDialog = builder.create();
+//        alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE).setBackgroundResource(R.drawable.trash);
+//        builder.setView(layout);
+        Button button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.trash, null);
+        button.setCompoundDrawablesWithIntrinsicBounds(this.getResources().getDrawable(
+                R.drawable.trash), null, null, null);
+//        drawable.setBounds((int) (drawable.getIntrinsicWidth() * 0.5),
+//                0, (int) (drawable.getIntrinsicWidth() * 1.5),
+//                drawable.getIntrinsicHeight());
+//        button.setCompoundDrawables(drawable,null,null,null);
+        builder.setMessage("Clear all your drawings?").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
+
     }
 
     @Override

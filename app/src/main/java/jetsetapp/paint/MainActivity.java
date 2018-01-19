@@ -9,17 +9,22 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    final static int myBlack = Color.parseColor("#001A00");
 
     protected static ImageButton undoButton;
     protected static ImageButton redoButton;
@@ -27,33 +32,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected static CanvasView canvasView;
     private static Bitmap newBitmap;
     private static boolean fillFloodSelected = false;
-    int lastChosenColor = Color.BLACK;
+    int lastChosenColor = myBlack;
     ProgressDialog progressDialog;
     Integer count;
     PorterDuffColorFilter greenFilter =
             new PorterDuffColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
+    RelativeLayout.LayoutParams org_params;
     private Bitmap mBitmap;
     private HorizontalScrollView horizontalPaintsView;
     private Bitmap backgroundPicture;
-    private ImageButton eraseButton;
+    //    private ImageButton eraseButton;
     private ImageButton drawSmallButton;
     private ImageButton drawBigButton;
     private ImageButton drawRollerButton;
     private ImageButton saveFileButton;
     private ImageButton addPictureButton;
     private ImageButton floodFillButton;
+    private ImageView rectangle;
     private ImageButton[] btn = new ImageButton[7];
     private ImageButton btn_unfocus;
-    private int[] btn_id = {R.id.floodFill, R.id.addPicture, R.id.erase, R.id.drawSmallbutton, R.id.drawBigbutton, R.id.drawRoller, R.id.saveFile};
+    private int[] btn_id = {R.id.floodFill, R.id.addPicture, R.id.drawSmallbutton, R.id.drawBigbutton, R.id.drawRoller, R.id.saveFile};
     private float buttonUnfocusTransparency = 0.65f;
-
-//    public static int getCanvasViewHeight() {
-//        return canvasView.getHeight();
-//    }
-//
-//    public int getWindowManagerWidth(){
-//        return getWindowManager().getDefaultDisplay().getWidth();
-//    }
+    private int unfocus_height;
+    private int unfocus_width;
+    private GradientDrawable shapeDrawable;
 
     public static Bitmap getNewBitmap() {
         return newBitmap;
@@ -79,8 +81,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         redoButton = (ImageButton)findViewById(R.id.redoButton);
         clearButton = (ImageButton) findViewById(R.id.clearButton);
 
-        eraseButton = (ImageButton) findViewById(R.id.erase);
-        eraseButton.setOnClickListener(this);
+//        eraseButton = (ImageButton) findViewById(R.id.erase);
+//        eraseButton.setOnClickListener(this);
 
         drawBigButton = (ImageButton) findViewById(R.id.drawBigbutton);
         drawBigButton.setOnClickListener(this);
@@ -98,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         addPictureButton.setOnClickListener(this);
 
         floodFillButton = (ImageButton) findViewById(R.id.floodFill);
+
+
         floodFillButton.setOnClickListener(this);
 
         horizontalPaintsView = (HorizontalScrollView) findViewById(R.id.HorizontalScroll);
@@ -105,37 +109,68 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Set background to all buttons
 
-
-        for (int i = 0; i < btn.length; i++) {
+        for (int i = 0; i < btn.length - 1; i++) {
             btn[i] = (ImageButton) findViewById(btn_id[i]);
-            btn[i].getBackground().clearColorFilter();
+            btn[i].getBackground().setColorFilter(0x90ffffff, PorterDuff.Mode.MULTIPLY);
 //            btn[i].setAlpha(buttonUnfocusTransparency);
             btn[i].setOnClickListener(this);
         }
 
         btn_unfocus = btn[0];
 
-        if (CatGallery.isPictureChosen()) {
+
+        if (CatGallery.isPictureChosen() || DogGallery.isPictureChosen() || OtherGallery.isPictureChosen()) {
             setCanvasViewBackground();
         }
-
 
 //         Disable hardware acceleration for shadow color o work
 
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
 //            canvasView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 //        }
+        // Rectangle below paint icon (makes color)
+        rectangle = (ImageView) findViewById(R.id.circle);
+        Drawable background = rectangle.getBackground();
+        shapeDrawable = (GradientDrawable) background;
+        shapeDrawable.setColor(Color.BLACK);
 
+
+//        GradientDrawable drawable = (GradientDrawable) rectangle.getDrawable();
+
+//        drawable.setColor(canvasView.getColor());
     }
 
     private void setFocus(ImageButton btn_unfocus, ImageButton btn_focus) {
-//        btn_unfocus.setAlpha(buttonUnfocusTransparency);
-//        btn_unfocus.setHovered(false);
-        btn_unfocus.getBackground().clearColorFilter(); //.setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
-        btn_focus.getBackground().setColorFilter(0x25990000, PorterDuff.Mode.DARKEN);
-//        btn_focus.setAlpha(1f);
-//        btn_focus.setHovered(true);
+
+//        btn_unfocus.getBackground().clearColorFilter();
+//        btn_focus.getBackground().setColorFilter(0x25990000, PorterDuff.Mode.DARKEN);
+//        btn_unfocus.getBackground().setColorFilter(0x90ffffff, PorterDuff.Mode.MULTIPLY);
+        btn_focus.getBackground().clearColorFilter();
+
+        RelativeLayout.LayoutParams focus_params = (RelativeLayout.LayoutParams) btn_focus.getLayoutParams();
+//        RelativeLayout.LayoutParams org_params = (RelativeLayout.LayoutParams) addPictureButton.getLayoutParams();
+//        RelativeLayout.LayoutParams org_params = params;
+//        int org_height = params.height;
+//        int org_width = params.width;
+        focus_params.height = (int) (focus_params.height * 1.2);
+        focus_params.width = (int) (focus_params.width * 1.2);
+        btn_focus.setLayoutParams(focus_params);
+
+        unfocus_height = btn_focus.getHeight();
+        unfocus_width = btn_focus.getWidth();
+
+
+//        params.height = org_height;
+//        params.width = org_width;
+
+        RelativeLayout.LayoutParams unfocus_params = (RelativeLayout.LayoutParams) btn_unfocus.getLayoutParams();
+//
+        unfocus_params.height = unfocus_height;
+        unfocus_params.width = unfocus_width;
+        btn_unfocus.setLayoutParams(unfocus_params);
+
         this.btn_unfocus = btn_focus;
+
     }
 
     @Override
@@ -199,7 +234,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -209,8 +243,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Save savefile = new Save();
             savefile.SaveImage(this,mBitmap);
             canvasView.destroyDrawingCache();
-//            Log.v(TAG,"Permission: "+permissions[0]+ "was "+grantResults[0]);
-            //resume tasks needing this permission
         }
     }
 
@@ -226,24 +258,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        s.setLevel(10000);
 //
         canvasView.setNewBitmap(newBitmap);
+
     }
 
     public void setCanvasColor(View v) {
         ImageButton x = (ImageButton) v;
         String buttonTag = String.valueOf(x.getTag());
-        Log.v("TAG", buttonTag);
+
         canvasView.changeColor(Color.parseColor(buttonTag));
         lastChosenColor = Color.parseColor(buttonTag);
+        if (rectangle != null) {
+            Drawable background = rectangle.getBackground();
+            shapeDrawable = (GradientDrawable) background;
+            shapeDrawable.setColor(canvasView.getColor());
+        }
+
 
     }
 
     public void clearCanvas(View v){
         canvasView.clearCanvas();
-    }
-
-    public void doFloodFill() {
-
-//        floodFill(backgroundPicture,);
     }
 
     public void smallButton(View v) {

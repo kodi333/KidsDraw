@@ -16,12 +16,12 @@
     <ScrollView
         android:id="@+id/pic_scroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@+id/bottom_menu">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TableLayout
@@ -32,23 +32,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <ImageView
-                        android:id="@+id/cat15"
-                        style="@style/galleryIcon"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:onClick="setBackground"
-                        android:src="@drawable/cat15"
-                        android:tag="cat15" />
-
-                    <ImageView
-                        android:id="@+id/cat9"
-                        style="@style/galleryIcon"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:onClick="setBackground"
-                        android:src="@drawable/cat9"
-                        android:tag="cat9" />
+                    <TextView
+                        android:id="@+id/textView"
+                        style="@style/GalleryTextStyle"
+                        android:layout_height="match_parent"
+                        android:padding="2dp"
+                        android:shadowColor="@color/colorRed"
+                        android:shadowDx="6"
+                        android:shadowDy="-6"
+                        android:shadowRadius="3"
+                        android:text="@string/gallery_title" />
                 </TableRow>
 
                 <TableRow
@@ -56,27 +49,13 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/cat4"
+                        android:id="@+id/cat11"
                         style="@style/galleryIcon"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:onClick="setBackground"
-                        android:src="@drawable/cat4"
-                        android:tag="cat4" />
-
-                    <ImageView
-                        android:id="@+id/cat3"
-                        style="@style/galleryIcon"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:onClick="setBackground"
-                        android:src="@drawable/cat3"
-                        android:tag="cat3" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                        android:src="@drawable/cat11"
+                        android:tag="cat11" />
 
                     <ImageView
                         android:id="@+id/cat12"
@@ -86,6 +65,21 @@
                         android:onClick="setBackground"
                         android:src="@drawable/cat12"
                         android:tag="cat12" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/cat1"
+                        style="@style/galleryIcon"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:cropToPadding="false"
+                        android:onClick="setBackground"
+                        android:src="@drawable/cat1"
+                        android:tag="cat1" />
 
                     <ImageView
                         android:id="@+id/cat2"
@@ -119,20 +113,12 @@
                         android:onClick="setBackground"
                         android:src="@drawable/cat6"
                         android:tag="cat6" />
+
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/cat8"
-                        style="@style/galleryIcon"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:onClick="setBackground"
-                        android:src="@drawable/cat8"
-                        android:tag="cat8" />
 
                     <ImageView
                         android:id="@+id/cat7"
@@ -142,6 +128,15 @@
                         android:onClick="setBackground"
                         android:src="@drawable/cat7"
                         android:tag="cat7" />
+
+                    <ImageView
+                        android:id="@+id/cat8"
+                        style="@style/galleryIcon"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:onClick="setBackground"
+                        android:src="@drawable/cat8"
+                        android:tag="cat8" />
                 </TableRow>
 
                 <TableRow
@@ -149,13 +144,13 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/cat16"
+                        android:id="@+id/cat9"
                         style="@style/galleryIcon"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:onClick="setBackground"
-                        android:src="@drawable/cat16"
-                        android:tag="cat16" />
+                        android:src="@drawable/cat9"
+                        android:tag="cat9" />
 
                     <ImageView
                         android:id="@+id/cat10"
@@ -172,26 +167,29 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/cat14"
+                        android:id="@+id/cat3"
                         style="@style/galleryIcon"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:onClick="setBackground"
-                        android:src="@drawable/cat14"
-                        android:tag="cat14" />
+                        android:src="@drawable/cat3"
+                        android:tag="cat3" />
 
                     <ImageView
-                        android:id="@+id/cat13"
+                        android:id="@+id/cat4"
                         style="@style/galleryIcon"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:onClick="setBackground"
-                        android:src="@drawable/cat13"
-                        android:tag="cat13" />
+                        android:src="@drawable/cat4"
+                        android:tag="cat4" />
+
 
                 </TableRow>
+
             </TableLayout>
-        </LinearLayout>
+
+        </RelativeLayout>
     </ScrollView>
 
     <LinearLayout
@@ -205,26 +203,24 @@
 
         <ImageButton
             android:id="@+id/dogs"
-            style="@style/colorButton"
+            style="@style/bottomButton"
             android:layout_gravity="left"
             android:layout_weight="0.33"
-            app:srcCompat="@drawable/dog1" />
+            app:srcCompat="@drawable/bottom_menu_dog4" />
 
         <ImageButton
             android:id="@+id/cats"
-            style="@style/colorButton"
+            style="@style/bottomButton"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.33"
-            android:tag="cats"
-            app:srcCompat="@drawable/cat2" />
+            app:srcCompat="@drawable/bottom_menu_cat1" />
 
         <ImageButton
             android:id="@+id/other"
-            style="@style/colorButton"
+            style="@style/bottomButton"
             android:layout_gravity="right"
             android:layout_weight="0.33"
-            android:tag="other"
-            app:srcCompat="@drawable/dog13" />
+            app:srcCompat="@drawable/bottom_menu_princess2" />
 
     </LinearLayout>
 

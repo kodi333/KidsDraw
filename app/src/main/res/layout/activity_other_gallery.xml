@@ -15,9 +15,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_menu">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -31,22 +32,24 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/cat15"
+                        android:id="@+id/princess3"
                         style="@style/galleryIcon"
+                        android:layout_width="match_parent"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:onClick="setBackground"
-                        android:src="@drawable/cat15"
-                        android:tag="cat15" />
+                        android:src="@drawable/princess3"
+                        android:tag="princess3" />
 
                     <ImageView
-                        android:id="@+id/cat9"
+                        android:id="@+id/princess4"
                         style="@style/galleryIcon"
+                        android:layout_width="match_parent"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:onClick="setBackground"
-                        android:src="@drawable/cat9"
-                        android:tag="cat9" />
+                        android:src="@drawable/princess4"
+                        android:tag="princess4" />
                 </TableRow>
 
                 <TableRow
@@ -54,45 +57,24 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/cat4"
+                        android:id="@+id/princess5"
                         style="@style/galleryIcon"
+                        android:layout_width="match_parent"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:onClick="setBackground"
-                        android:src="@drawable/cat4"
-                        android:tag="cat4" />
+                        android:src="@drawable/princess5"
+                        android:tag="princess5" />
 
                     <ImageView
-                        android:id="@+id/cat3"
+                        android:id="@+id/princess6"
                         style="@style/galleryIcon"
+                        android:layout_width="match_parent"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:onClick="setBackground"
-                        android:src="@drawable/cat3"
-                        android:tag="cat3" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/cat12"
-                        style="@style/galleryIcon"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:onClick="setBackground"
-                        android:src="@drawable/cat12"
-                        android:tag="cat12" />
-
-                    <ImageView
-                        android:id="@+id/cat2"
-                        style="@style/galleryIcon"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:onClick="setBackground"
-                        android:src="@drawable/cat2"
-                        android:tag="cat2" />
+                        android:src="@drawable/princess6"
+                        android:tag="princess6" />
 
                 </TableRow>
 
@@ -101,22 +83,24 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/cat5"
+                        android:id="@+id/princess7"
                         style="@style/galleryIcon"
+                        android:layout_width="match_parent"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:onClick="setBackground"
-                        android:src="@drawable/cat5"
-                        android:tag="cat5" />
+                        android:src="@drawable/princess7"
+                        android:tag="princess7" />
 
                     <ImageView
-                        android:id="@+id/cat6"
+                        android:id="@+id/princess8"
                         style="@style/galleryIcon"
+                        android:layout_width="match_parent"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:onClick="setBackground"
-                        android:src="@drawable/cat6"
-                        android:tag="cat6" />
+                        android:src="@drawable/princess8"
+                        android:tag="princess8" />
                 </TableRow>
 
                 <TableRow
@@ -124,22 +108,24 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/cat8"
+                        android:id="@+id/princess9"
                         style="@style/galleryIcon"
+                        android:layout_width="match_parent"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:onClick="setBackground"
-                        android:src="@drawable/cat8"
-                        android:tag="cat8" />
+                        android:src="@drawable/princess9"
+                        android:tag="princess9" />
 
                     <ImageView
-                        android:id="@+id/cat7"
+                        android:id="@+id/princess10"
                         style="@style/galleryIcon"
+                        android:layout_width="match_parent"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:onClick="setBackground"
-                        android:src="@drawable/cat7"
-                        android:tag="cat7" />
+                        android:src="@drawable/princess10"
+                        android:tag="princess10" />
                 </TableRow>
 
                 <TableRow
@@ -147,22 +133,22 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/cat16"
+                        android:id="@+id/princess11"
                         style="@style/galleryIcon"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:onClick="setBackground"
-                        android:src="@drawable/cat16"
-                        android:tag="cat16" />
+                        android:src="@drawable/princess11"
+                        android:tag="princess11" />
 
                     <ImageView
-                        android:id="@+id/cat10"
+                        android:id="@+id/princess12"
                         style="@style/galleryIcon"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:onClick="setBackground"
-                        android:src="@drawable/cat10"
-                        android:tag="cat10" />
+                        android:src="@drawable/princess12"
+                        android:tag="princess12" />
                 </TableRow>
 
                 <TableRow
@@ -170,57 +156,59 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/cat14"
+                        android:id="@+id/princess2"
                         style="@style/galleryIcon"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:onClick="setBackground"
-                        android:src="@drawable/cat14"
-                        android:tag="cat14" />
+                        android:src="@drawable/princess2"
+                        android:tag="princess2" />
 
                     <ImageView
-                        android:id="@+id/cat13"
+                        android:id="@+id/princess14"
                         style="@style/galleryIcon"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:onClick="setBackground"
-                        android:src="@drawable/cat13"
-                        android:tag="cat13" />
+                        android:src="@drawable/princess14"
+                        android:tag="princess14" />
 
                 </TableRow>
             </TableLayout>
-        </LinearLayout>
+        </RelativeLayout>
     </ScrollView>
 
-    <RadioGroup
+    <LinearLayout
+        android:id="@+id/bottom_menu"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:clickable="true"
         android:orientation="horizontal">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/dogs"
-            style="@style/colorButton"
+            style="@style/bottomButton"
             android:layout_gravity="left"
             android:layout_weight="0.33"
-            app:srcCompat="@drawable/dog1" />
+            app:srcCompat="@drawable/bottom_menu_dog4" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/cats"
-            style="@style/colorButton"
+            style="@style/bottomButton"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.33"
-            app:srcCompat="@drawable/dog4" />
+            app:srcCompat="@drawable/bottom_menu_cat1" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/other"
-            style="@style/colorButton"
+            style="@style/bottomButton"
             android:layout_gravity="right"
             android:layout_weight="0.33"
-            app:srcCompat="@drawable/dog13" />
+            app:srcCompat="@drawable/bottom_menu_princess2" />
 
-    </RadioGroup>
+    </LinearLayout>
 
 
 </RelativeLayout>

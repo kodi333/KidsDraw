@@ -3,10 +3,12 @@ package jetsetapp.paint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
-public class DogGallery extends AppCompatActivity {
+public class DogGallery extends AppCompatActivity implements View.OnClickListener {
 
     private static boolean pictureChosen = false;
 
@@ -24,33 +26,36 @@ public class DogGallery extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dog_gallery);
 
-        dogs = (ImageView) findViewById(R.id.dogs);
-        cats = (ImageView) findViewById(R.id.cats);
-        other = (ImageView) findViewById(R.id.other);
+        dogs = (ImageButton) findViewById(R.id.dogs);
+        cats = (ImageButton) findViewById(R.id.cats);
+        other = (ImageButton) findViewById(R.id.other);
 
-        dogs.setOnClickListener(handler);
-        cats.setOnClickListener(handler);
-        other.setOnClickListener(handler);
+        dogs.setOnClickListener(this);
+        cats.setOnClickListener(this);
+        other.setOnClickListener(this);
 
-        handler = new View.OnClickListener() {
+    }
 
-            public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
 
-                if (v == dogs) {
-                    // doStuff
-                    Intent intentMain = new Intent(DogGallery.this,
-                            DogGallery.class);
-                    DogGallery.this.startActivity(intentMain);
-                }
+        switch (v.getId()) {
 
-                if (v == other) {
-                    // doStuff
-                    Intent intentApp = new Intent(DogGallery.this,
-                            OtherGallery.class);
-                    DogGallery.this.startActivity(intentApp);
-                }
-            }
-        };
+            case R.id.cats:
+                Intent intentApp = new Intent(DogGallery.this,
+                        CatGallery.class);
+                DogGallery.this.startActivity(intentApp);
+                Log.v("TAG", "catsStart");
+                break;
+
+            case R.id.other:
+                intentApp = new Intent(DogGallery.this,
+                        OtherGallery.class);
+                DogGallery.this.startActivity(intentApp);
+                Log.v("TAG", "otherStart");
+                break;
+
+        }
 
 
     }

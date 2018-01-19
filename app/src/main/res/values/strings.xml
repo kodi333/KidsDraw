@@ -2,4 +2,6 @@
     <string name="app_name">Kids Drawing</string>
     <string name="switch_on">Glow</string>
     <string name="switch_off">Normal</string>
+    <string name="gallery_title">Choose a picture :</string>
+    <string name="about_content"> Trala</string>
 </resources>

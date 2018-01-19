@@ -30,44 +30,9 @@ public class CatGallery extends AppCompatActivity implements View.OnClickListene
         cats = (ImageButton) findViewById(R.id.cats);
         other = (ImageButton) findViewById(R.id.other);
 
-//        dogs.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                Log.v("TAG","dogsStart");
-//            }
-//        });
-
         dogs.setOnClickListener(this);
         cats.setOnClickListener(this);
         other.setOnClickListener(this);
-
-//        dogs.setOnClickListener(handler);
-//        cats.setOnClickListener(handler);
-//        other.setOnClickListener(handler);
-//
-//        handler = new View.OnClickListener(){
-//
-//            public void onClick(View v) {
-//
-//                if(v.getTag()==dogs){
-//                    // doStuff
-//                    Intent intentMain = new Intent(CatGallery.this ,
-//                            DogGallery.class);
-//                    CatGallery.this.startActivity(intentMain);
-//                    Log.v("TAG","dogsStart");
-//                }
-//
-//                if(v.getTag()==other){
-//                    // doStuff
-//                    Intent intentApp = new Intent(CatGallery.this,
-//                            OtherGallery.class);
-//                    CatGallery.this.startActivity(intentApp);
-//                    Log.v("TAG","otherStart");
-//                }
-//            }
-//        };
-
 
     }
 
@@ -80,13 +45,6 @@ public class CatGallery extends AppCompatActivity implements View.OnClickListene
                         DogGallery.class);
                 CatGallery.this.startActivity(intentApp);
                 Log.v("TAG", "dogsStart");
-                break;
-
-            case R.id.cats:
-                intentApp = new Intent(CatGallery.this,
-                        CatGallery.class);
-                CatGallery.this.startActivity(intentApp);
-                Log.v("TAG", "catsStart");
                 break;
 
             case R.id.other:

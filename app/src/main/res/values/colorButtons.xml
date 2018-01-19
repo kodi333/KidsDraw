@@ -1,34 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="colorButton">
-        <item name="android:layout_height">50dp</item>
-        <item name="android:layout_width">50dp</item>
-        <item name="android:layout_marginRight">1dp</item>
-        <item name="android:layout_marginLeft">1dp</item>
+        <item name="android:layout_height">49dp</item>
+        <item name="android:layout_width">49dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:layout_marginLeft">0dp</item>
         <item name="android:layout_marginTop">5dp</item>
         <item name="android:scaleType">fitXY</item>
+        <item name="android:background">#0000</item>
+
+    </style>
+
+    <style name="bottomButton">
+        <item name="android:layout_height">49dp</item>
+        <item name="android:layout_width">49dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:background">#0000</item>
+
+    </style>
+
+    <style name="GalleryTextStyle">
+        <item name="android:textColor">@color/colorMaroon</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="undoButton">
-        <item name="android:layout_height">50dp</item>
-        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_width">60dp</item>
         <item name="android:layout_marginRight">0dp</item>
         <item name="android:layout_marginLeft">0dp</item>
         <item name="android:layout_marginTop">0dp</item>
-        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:background">#0000</item>
+    </style>
+
+    <style name="trashButton">
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="android:background">#0000</item>
     </style>
 
     <style name="galleryIcon">
-        <item name="android:layout_height">150dp</item>
-        <item name="android:layout_width">150dp</item>
-        <item name="android:layout_marginRight">10dp</item>
-        <item name="android:layout_marginLeft">10dp</item>
-        <item name="android:layout_marginTop">10dp</item>
-        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_weight">0.5</item>
+        <item name="android:layout_margin">@dimen/gallery_margin</item>
         <item name="android:scaleType">fitXY</item>
         <item name="android:background">@drawable/frame</item>
+        <item name="android:adjustViewBounds">true</item>
     </style>
 
     <style name="switchStyle">
