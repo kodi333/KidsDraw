@@ -23,9 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
 
 
 
@@ -82,18 +80,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // My AdMob app ID: ca-app-pub-9459800474754936~9833078099
-        MobileAds.initialize(this, "ca-app-pub-9459800474754936~9833078099");
-
-        //my add unit id ca-app-pub-9459800474754936/7370566289
-
-        //test ca-app-pub-3940256099942544/6300978111
-
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
-        mInterstitialAd.loadAd(new AdRequest.Builder()
-                .addTestDevice("D23C1744B90D70B0858576D6AE9B4C71") // I have added this one 05/06/2018
-                .build());
 
         canvasView = findViewById(R.id.canvas);
         canvasView.setDrawingCacheEnabled(true);
@@ -101,9 +87,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         undoButton = findViewById(R.id.undoButton);
         redoButton = findViewById(R.id.redoButton);
         clearButton = findViewById(R.id.clearButton);
-
-//        eraseButton = (ImageButton) findViewById(R.id.erase);
-//        eraseButton.setOnClickListener(this);
 
         drawBigButton = findViewById(R.id.drawBigbutton);
         drawBigButton.setOnClickListener(this);
@@ -133,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (int i = 0; i < btn.length - 1; i++) {
             btn[i] = findViewById(btn_id[i]);
             btn[i].getBackground().setColorFilter(0x90ffffff, PorterDuff.Mode.MULTIPLY);
-//            btn[i].setAlpha(buttonUnfocusTransparency);
             btn[i].setOnClickListener(this);
         }
 
@@ -144,28 +126,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             setCanvasViewBackground();
         }
 
-//         Disable hardware acceleration for shadow color o work
-
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-//            canvasView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-//        }
-        // Rectangle below paint icon (makes color)
         rectangle = findViewById(R.id.circle);
         Drawable background = rectangle.getBackground();
         shapeDrawable = (GradientDrawable) background;
         shapeDrawable.setColor(Color.parseColor("#E6B0AA"));
 
-
-//        GradientDrawable drawable = (GradientDrawable) rectangle.getDrawable();
-
-//        drawable.setColor(canvasView.getColor());
     }
 
     private void setFocus(ImageButton btn_unfocus, ImageButton btn_focus) {
 
-//        btn_unfocus.getBackground().clearColorFilter();
-//        btn_focus.getBackground().setColorFilter(0x25990000, PorterDuff.Mode.DARKEN);
-//        btn_unfocus.getBackground().setColorFilter(0x90ffffff, PorterDuff.Mode.MULTIPLY);
         btn_focus.getBackground().clearColorFilter();
 
         RelativeLayout.LayoutParams focus_params = (RelativeLayout.LayoutParams) btn_focus.getLayoutParams();
@@ -272,14 +241,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String b = extras.getString("picture");
         newBitmap = BitmapFactory.decodeResource(getResources(), getResources().getIdentifier(b, "drawable", getPackageName())).copy(Bitmap.Config.ARGB_8888, true);
 
-
-//        Drawable d = getResources().getDrawable(getResources().getIdentifier(b, "drawable", getPackageName()));
-//        this.backgroundPicture = BitmapFactory.decodeResource(getResources(),
-//                getResources().getIdentifier(b, "drawable", getPackageName()));
-//        d.setBounds(0, 0, (int) (d.getIntrinsicWidth() * 0.5), (int) (d.getIntrinsicHeight() * 0.5));
-//        Drawable s = new ScaleDrawable(d, Gravity.FILL_VERTICAL, 0.50f, 0.50f);
-//        s.setLevel(10000);
-//
         canvasView.setNewBitmap(newBitmap);
 
     }
@@ -358,11 +319,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void setGlow(View v) {
-//        BlurMaskFilter blur = new BlurMaskFilter(15, BlurMaskFilter.Blur.NORMAL);
         canvasView.paint.setShadowLayer(50, 0, 0, Color.rgb(100, 255, 255));
         canvasView.changeColor(Color.rgb(255, 255, 255));
-        //canvasView.paint.setMaskFilter(blur);
-        //canvasView.paint.setStyle(Paint.Style.FILL);
 
     }
 
