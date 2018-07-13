@@ -3,7 +3,6 @@ package jetsetapp.paint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,15 +10,13 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewStub;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -44,7 +41,7 @@ public class CanvasView extends View {
     private ArrayList<Path> undonePaths = new ArrayList<Path>();
     private ArrayList<Integer> undoneColors = new ArrayList<Integer>();
     private ArrayList<Float> undoneStrokes = new ArrayList<Float>();
-    private int currentColor = MainActivity.myBlack; // was black
+    private int currentColor = Color.parseColor("#E6B0AA"); // lime
     private float currentStroke = 10F;
     private Bitmap mBitmap;
 
@@ -65,6 +62,14 @@ public class CanvasView extends View {
     private Bitmap fillBitmap;
     private List<Integer> undoneTargetFillColors = new ArrayList<Integer>();
 
+    public CanvasView(Context context) {
+        super(context);
+    }
+
+    public CanvasView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+    }
+
     public CanvasView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
@@ -72,9 +77,8 @@ public class CanvasView extends View {
         setFocusable(true);
         setFocusableInTouchMode(true);
 
-        paint.setAntiAlias(true);
         paint.setDither(true);
-        paint.setColor(MainActivity.myBlack); // BLACK
+        paint.setColor(Color.parseColor("#E6B0AA")); // Lime
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.ROUND);
@@ -227,12 +231,20 @@ public class CanvasView extends View {
 
     public void clearCanvas() {
 
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+        LayoutInflater layoutInflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View promptView = layoutInflater.inflate(R.layout.about, null);
+        final AlertDialog.Builder alertD = new AlertDialog.Builder(context);
+        alertD.setView(promptView);
+        final AlertDialog ad = alertD.show();
+        ImageButton ok_button = promptView.findViewById(R.id.ok_button);
+        ImageButton no_buton = promptView.findViewById(R.id.no_button);
+
+
+        ok_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        path.reset();
+            public void onClick(View v) {
+                path.reset();
                         paths.clear();
                         undonePaths.clear();
                         sourceFillColors.clear();
@@ -246,51 +258,36 @@ public class CanvasView extends View {
                         targetFillColors.clear();
                         undoneTargetFillColors.clear();
 
-                        if (imageRect == null) {
-                            imageRect = new Rect(0, 0, getWidth(), getHeight());
-                        }
-
-                        newBitmap = MainActivity.getNewBitmap();
-                        if (newBitmap != null) canvas.drawBitmap(newBitmap, null, imageRect, paint);
-                        path = new Path();
-
-
-                        if (points.size() <= 0) {
-                            MainActivity.undoButton.setVisibility(View.INVISIBLE);
-                            MainActivity.clearButton.setVisibility(View.INVISIBLE);
-                        }
-//
-                        if (undonePoints.size() <= 0) {
-                            MainActivity.redoButton.setVisibility(View.INVISIBLE);
-                        }
-                        invalidate();
-                        break;
-
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        //No button clicked
-                        break;
+                if (imageRect == null) {
+                    imageRect = new Rect(0, 0, getWidth(), getHeight());
                 }
+
+                newBitmap = MainActivity.getNewBitmap();
+                if (newBitmap != null) canvas.drawBitmap(newBitmap, null, imageRect, paint);
+                path = new Path();
+
+
+                if (points.size() <= 0) {
+                    MainActivity.undoButton.setVisibility(View.INVISIBLE);
+                    MainActivity.clearButton.setVisibility(View.INVISIBLE);
+                }
+//
+                if (undonePoints.size() <= 0) {
+                    MainActivity.redoButton.setVisibility(View.INVISIBLE);
+                }
+                invalidate();
+                ad.dismiss();
+
             }
-        };
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        });
+        no_buton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ad.dismiss();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            }
+        });
 
-//        View layout = inflater.inflate(R.layout.about, (ViewGroup)findViewById(R.id.root));
-        AlertDialog alertDialog = builder.create();
-//        alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE).setBackgroundResource(R.drawable.trash);
-//        builder.setView(layout);
-        Button button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.trash, null);
-        button.setCompoundDrawablesWithIntrinsicBounds(this.getResources().getDrawable(
-                R.drawable.trash), null, null, null);
-//        drawable.setBounds((int) (drawable.getIntrinsicWidth() * 0.5),
-//                0, (int) (drawable.getIntrinsicWidth() * 1.5),
-//                drawable.getIntrinsicHeight());
-//        button.setCompoundDrawables(drawable,null,null,null);
-        builder.setMessage("Clear all your drawings?").setPositiveButton("Yes", dialogClickListener)
-                .setNegativeButton("No", dialogClickListener).show();
 
     }
 
@@ -306,18 +303,11 @@ public class CanvasView extends View {
                     p1.y = (int) y;
 
                     fillSourceColor = newBitmap.getPixel((int) x, (int) y);
-                    // Skip coloring bitmap character (cat) borders, so skip if color is black -16514555 color
-//                    if (fillSourceColor != -16514555 && fillSourceColor != -16777216) {
-//                        Log.v("TAG", String.format("#%06X", (0xFFFFFF & fillSourceColor)));
-//                        Log.v("TAG", String.valueOf(fillSourceColor));
-//                    if(fillSourceColor != Color.BLACK){ // Ignore black image borders
-                        final int targetColor = currentColor;
-//                    canvasView.destroyDrawingCache();
-//                    newBitmap = Bitmap.createBitmap(canvasView.getDrawingCache());
+
+                    final int targetColor = currentColor;
                         FloodFill fill = new FloodFill(newBitmap, fillSourceColor, targetColor);
                         fill.floodFill(p1.x, p1.y);
-//                    }
-//                }
+
                 } else {
                     p1.x = 0;
                     p1.y = 0;

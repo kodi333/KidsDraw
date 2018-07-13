@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <style name="yesNoButton">
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_margin">12dp</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:background">#0000</item>
+
+    </style>
+
     <style name="colorButton">
         <item name="android:layout_height">49dp</item>
         <item name="android:layout_width">49dp</item>

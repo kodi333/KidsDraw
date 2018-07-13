@@ -26,9 +26,9 @@ public class CatGallery extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cat_gallery);
 
-        dogs = (ImageButton) findViewById(R.id.dogs);
-        cats = (ImageButton) findViewById(R.id.cats);
-        other = (ImageButton) findViewById(R.id.other);
+        dogs = findViewById(R.id.dogs);
+        cats = findViewById(R.id.cats);
+        other = findViewById(R.id.other);
 
         dogs.setOnClickListener(this);
         cats.setOnClickListener(this);
@@ -63,7 +63,6 @@ public class CatGallery extends AppCompatActivity implements View.OnClickListene
         pictureChosen = true;
         ImageView x = (ImageView) v;
         String buttonId = String.valueOf(x.getTag());
-//       Log.v("TAG",buttonId);
 
         Intent mainActivity = new Intent(CatGallery.this, MainActivity.class);
         mainActivity.putExtra("picture", buttonId);

@@ -97,7 +97,7 @@
     <Space
         android:id="@+id/gap"
         android:layout_width="wrap_content"
-        android:layout_height="50dp" />
+        android:layout_height="55dp" />
 
     <jetsetapp.paint.CanvasView
         android:id="@+id/canvas"
@@ -145,11 +145,11 @@
             android:id="@+id/circle"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginRight="2dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/circle"
-            android:src="@drawable/color_icon2" />
+            android:src="@drawable/color_icon4" />
 
         <HorizontalScrollView
             android:id="@+id/HorizontalScroll"
@@ -235,7 +235,7 @@
                     android:layout_toStartOf="@+id/imageButtonBrown"
                     android:background="@drawable/c000010"
                     android:onClick="setCanvasColor"
-                    android:tag="#000010" />
+                    android:tag="#001A00" />
 
                 <ImageButton
                     android:id="@+id/imageButtonWhite"
@@ -389,16 +389,6 @@
                     android:tag="#A9CCE3" />
 
                 <ImageButton
-                    android:id="@+id/c5dade2"
-                    style="@style/colorButton"
-                    android:layout_alignParentTop="true"
-                    android:layout_toLeftOf="@+id/imageButtonLessBrown2"
-                    android:layout_toStartOf="@+id/imageButtonLessBrown2"
-                    android:background="@drawable/c5dade2"
-                    android:onClick="setCanvasColor"
-                    android:tag="#5dade2" />
-
-                <ImageButton
                     android:id="@+id/cAED6F1"
                     style="@style/colorButton"
                     android:layout_alignParentTop="true"
@@ -407,6 +397,16 @@
                     android:background="@drawable/caed6f1"
                     android:onClick="setCanvasColor"
                     android:tag="#AED6F1" />
+
+                <ImageButton
+                    android:id="@+id/c5dade2"
+                    style="@style/colorButton"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/imageButtonLessBrown2"
+                    android:layout_toStartOf="@+id/imageButtonLessBrown2"
+                    android:background="@drawable/c5dade2"
+                    android:onClick="setCanvasColor"
+                    android:tag="#5dade2" />
 
                 <ImageButton
                     android:id="@+id/imageButtonLessBrown3"

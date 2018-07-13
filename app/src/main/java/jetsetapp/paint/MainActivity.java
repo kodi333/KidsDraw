@@ -16,11 +16,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -31,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected static ImageButton clearButton;
     protected static CanvasView canvasView;
     private static Bitmap newBitmap;
-    private static boolean fillFloodSelected = false;
+    private static boolean fillFloodSelected = true;
     int lastChosenColor = myBlack;
     ProgressDialog progressDialog;
     Integer count;
@@ -56,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int unfocus_height;
     private int unfocus_width;
     private GradientDrawable shapeDrawable;
+    private InterstitialAd mInterstitialAd;
 
     public static Bitmap getNewBitmap() {
         return newBitmap;
@@ -74,43 +81,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        canvasView = (CanvasView) findViewById(R.id.canvas);
+        // My AdMob app ID: ca-app-pub-9459800474754936~9833078099
+        MobileAds.initialize(this, "ca-app-pub-9459800474754936~9833078099");
+
+        //my add unit id ca-app-pub-9459800474754936/7370566289
+
+        //test ca-app-pub-3940256099942544/6300978111
+
+        canvasView = findViewById(R.id.canvas);
         canvasView.setDrawingCacheEnabled(true);
 
-        undoButton = (ImageButton)findViewById(R.id.undoButton);
-        redoButton = (ImageButton)findViewById(R.id.redoButton);
-        clearButton = (ImageButton) findViewById(R.id.clearButton);
+        undoButton = findViewById(R.id.undoButton);
+        redoButton = findViewById(R.id.redoButton);
+        clearButton = findViewById(R.id.clearButton);
 
 //        eraseButton = (ImageButton) findViewById(R.id.erase);
 //        eraseButton.setOnClickListener(this);
 
-        drawBigButton = (ImageButton) findViewById(R.id.drawBigbutton);
+        drawBigButton = findViewById(R.id.drawBigbutton);
         drawBigButton.setOnClickListener(this);
 
-        drawSmallButton = (ImageButton) findViewById(R.id.drawSmallbutton);
+        drawSmallButton = findViewById(R.id.drawSmallbutton);
         drawSmallButton.setOnClickListener(this);
 
-        drawRollerButton = (ImageButton) findViewById(R.id.drawRoller);
+        drawRollerButton = findViewById(R.id.drawRoller);
         drawRollerButton.setOnClickListener(this);
 
-        saveFileButton = (ImageButton) findViewById(R.id.saveFile);
+        saveFileButton = findViewById(R.id.saveFile);
         saveFileButton.setOnClickListener(this);
 
-        addPictureButton = (ImageButton) findViewById(R.id.addPicture);
+        addPictureButton = findViewById(R.id.addPicture);
         addPictureButton.setOnClickListener(this);
 
-        floodFillButton = (ImageButton) findViewById(R.id.floodFill);
+        floodFillButton = findViewById(R.id.floodFill);
 
 
         floodFillButton.setOnClickListener(this);
 
-        horizontalPaintsView = (HorizontalScrollView) findViewById(R.id.HorizontalScroll);
+        horizontalPaintsView = findViewById(R.id.HorizontalScroll);
         horizontalPaintsView.setHorizontalScrollBarEnabled(false);
 
         // Set background to all buttons
 
         for (int i = 0; i < btn.length - 1; i++) {
-            btn[i] = (ImageButton) findViewById(btn_id[i]);
+            btn[i] = findViewById(btn_id[i]);
             btn[i].getBackground().setColorFilter(0x90ffffff, PorterDuff.Mode.MULTIPLY);
 //            btn[i].setAlpha(buttonUnfocusTransparency);
             btn[i].setOnClickListener(this);
@@ -129,10 +143,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            canvasView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 //        }
         // Rectangle below paint icon (makes color)
-        rectangle = (ImageView) findViewById(R.id.circle);
+        rectangle = findViewById(R.id.circle);
         Drawable background = rectangle.getBackground();
         shapeDrawable = (GradientDrawable) background;
-        shapeDrawable.setColor(Color.BLACK);
+        shapeDrawable.setColor(Color.parseColor("#E6B0AA"));
 
 
 //        GradientDrawable drawable = (GradientDrawable) rectangle.getDrawable();
@@ -148,10 +162,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_focus.getBackground().clearColorFilter();
 
         RelativeLayout.LayoutParams focus_params = (RelativeLayout.LayoutParams) btn_focus.getLayoutParams();
-//        RelativeLayout.LayoutParams org_params = (RelativeLayout.LayoutParams) addPictureButton.getLayoutParams();
-//        RelativeLayout.LayoutParams org_params = params;
-//        int org_height = params.height;
-//        int org_width = params.width;
         focus_params.height = (int) (focus_params.height * 1.2);
         focus_params.width = (int) (focus_params.width * 1.2);
         btn_focus.setLayoutParams(focus_params);
@@ -159,9 +169,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         unfocus_height = btn_focus.getHeight();
         unfocus_width = btn_focus.getWidth();
 
-
-//        params.height = org_height;
-//        params.width = org_width;
 
         RelativeLayout.LayoutParams unfocus_params = (RelativeLayout.LayoutParams) btn_unfocus.getLayoutParams();
 //
@@ -215,6 +222,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.addPicture:
+                // Load ad
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                    Log.d("Ads", "Ad loaded.");
+                } else {
+                    Log.d("TAG", "The interstitial wasn't loaded yet.");
+                }
                 new LoadViewTask().execute();
                 setFocus(btn_unfocus, (ImageButton) findViewById(v.getId()));
                 break;
@@ -250,6 +264,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Bundle extras = getIntent().getExtras();
         String b = extras.getString("picture");
         newBitmap = BitmapFactory.decodeResource(getResources(), getResources().getIdentifier(b, "drawable", getPackageName())).copy(Bitmap.Config.ARGB_8888, true);
+
+
 //        Drawable d = getResources().getDrawable(getResources().getIdentifier(b, "drawable", getPackageName()));
 //        this.backgroundPicture = BitmapFactory.decodeResource(getResources(),
 //                getResources().getIdentifier(b, "drawable", getPackageName()));

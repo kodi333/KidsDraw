@@ -187,6 +187,31 @@
 
                 </TableRow>
 
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/blank_white"
+                        style="@style/galleryIcon"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:onClick="setBackground"
+                        android:src="@drawable/blank_white"
+                        android:tag="blank_white" />
+
+                    <ImageView
+                        android:id="@+id/cat14"
+                        style="@style/galleryIcon"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:onClick="setBackground"
+                        android:src="@drawable/cat14"
+                        android:tag="cat14" />
+
+
+                </TableRow>
+
             </TableLayout>
 
         </RelativeLayout>
@@ -196,7 +221,8 @@
         android:id="@+id/bottom_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/banner"
+        android:layout_alignParentBottom="false"
         android:layout_centerHorizontal="true"
         android:clickable="true"
         android:orientation="horizontal">
@@ -224,5 +250,26 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_weight="0.33"
+        android:clickable="true"
+        android:orientation="horizontal">
+
+        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111"></com.google.android.gms.ads.AdView>
+
+    </LinearLayout>
+
+    <!--TEST ADS: ca-app-pub-3940256099942544/6300978111-->
+    <!--MY ADS: ca-app-pub-9459800474754936/4804680914-->
 
 </RelativeLayout>

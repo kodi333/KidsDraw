@@ -14,7 +14,7 @@ import java.util.Queue;
 public class FloodFill {
 
     protected Bitmap image = null;
-    protected int[] tolerance = new int[]{25, 25, 25};
+    protected int[] tolerance = new int[]{20, 20, 20}; // WAS 20
     protected int width = 0;
     protected int height = 0;
     protected int[] pixels = null;
@@ -34,7 +34,7 @@ public class FloodFill {
 
     public FloodFill(Bitmap img, int targetColor, int newColor) {
         useImage(img);
-        skipFill = (targetColor >= Color.parseColor("#000000") && targetColor <= Color.parseColor("#000002"));
+        skipFill = (targetColor != Color.parseColor("#001A00") && (targetColor >= Color.parseColor("#000000") && targetColor <= Color.parseColor("#000020")));
 
         setFillColor(newColor);
         setTargetColor(targetColor);

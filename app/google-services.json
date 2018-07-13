@@ -1,0 +1,94 @@
+{
+  "project_info": {
+    "project_number": "466265522119",
+    "firebase_url": "https://drawingforkids-98d12.firebaseio.com",
+    "project_id": "drawingforkids-98d12",
+    "storage_bucket": "drawingforkids-98d12.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:466265522119:android:0d371fd74456a4b2",
+        "android_client_info": {
+          "package_name": "com.jetsetapp.paint"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "466265522119-8ah80osh8gglhedsv5dh5d6uepejbr6i.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "466265522119-8ah80osh8gglhedsv5dh5d6uepejbr6i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMIhIXKiswpjCsp3im_43sxdqvrHrTD-I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:466265522119:android:5dbf4b96633930a0",
+        "android_client_info": {
+          "package_name": "jetsetapp.paint"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "466265522119-dk5fe7m3kjjtih2gbnbp5g85b0do9018.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "jetsetapp.paint",
+            "certificate_hash": "67c388be81e4de934d57d4118892026fd51a168a"
+          }
+        },
+        {
+          "client_id": "466265522119-8ah80osh8gglhedsv5dh5d6uepejbr6i.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "466265522119-8ah80osh8gglhedsv5dh5d6uepejbr6i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMIhIXKiswpjCsp3im_43sxdqvrHrTD-I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "466265522119-8ah80osh8gglhedsv5dh5d6uepejbr6i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

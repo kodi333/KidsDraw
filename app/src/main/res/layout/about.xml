@@ -2,30 +2,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorAccent">
+    android:background="@android:color/background_light">
 
+
+    <!--<EditText-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:inputType="textPersonName"-->
+    <!--android:text="Clear all your drawings?"-->
+    <!--android:ems="10"-->
+    <!--android:id="@+id/text"-->
+    <!--android:layout_alignParentBottom="false"-->
+    <!--android:layout_alignParentStart="false"-->
+    <!--android:layout_alignParentRight="false"-->
+    <!--android:layout_alignParentEnd="false"-->
+    <!--android:layout_alignParentLeft="false"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:textColorLink="@android:color/white"-->
+    <!--android:layout_height="wrap_content" />-->
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:text="Clear all your drawings?"
+        android:textSize="24sp" />
 
     <ImageButton
         android:id="@+id/ok_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/no_button"
-        android:layout_below="@+id/no_button"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:background="@color/colorAccent"
+        style="@style/yesNoButton"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/text"
         app:srcCompat="@drawable/ok" />
 
     <ImageButton
         android:id="@+id/no_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorAccent"
+        style="@style/yesNoButton"
+        android:layout_below="@+id/text"
+        android:layout_toLeftOf="@+id/ok_button"
         app:srcCompat="@drawable/no" />
 
 
