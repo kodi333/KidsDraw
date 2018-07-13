@@ -27,6 +27,13 @@
         android:orientation="horizontal">
 
 
+        <ImageButton
+            android:id="@+id/playMusic"
+            style="@style/colorButton"
+            android:layout_toLeftOf="@+id/addPicture"
+            android:layout_toStartOf="@+id/addPicture"
+            android:background="@drawable/music"
+            android:scaleType="fitStart" />
 
         <ImageButton
             android:id="@+id/addPicture"
@@ -34,7 +41,6 @@
             android:layout_toLeftOf="@+id/floodFill"
             android:layout_toStartOf="@+id/floodFill"
             android:background="@drawable/book"
-            android:onClick=""
             android:scaleType="fitStart" />
 
         <ImageButton
@@ -45,14 +51,6 @@
             android:background="@drawable/bucket"
             android:scaleType="fitStart" />
 
-        <!--<ImageButton-->
-        <!--android:id="@+id/erase"-->
-        <!--style="@style/colorButton"-->
-        <!--android:layout_toLeftOf="@+id/drawSmallbutton"-->
-        <!--android:layout_toStartOf="@+id/drawSmallbutton"-->
-        <!--android:background="@drawable/erase"-->
-        <!--android:onClick=""-->
-        <!--android:scaleType="fitStart" />-->
 
         <ImageButton
             android:id="@+id/drawSmallbutton"
@@ -60,7 +58,6 @@
             android:layout_toLeftOf="@+id/drawBigbutton"
             android:layout_toStartOf="@+id/drawBigbutton"
             android:background="@drawable/pencil"
-            android:onClick=""
             android:scaleType="fitStart" />
 
         <ImageButton
@@ -69,7 +66,6 @@
             android:layout_toLeftOf="@+id/drawRoller"
             android:layout_toStartOf="@+id/drawRoller"
             android:background="@drawable/marker2"
-            android:onClick=""
             android:scaleType="fitStart" />
 
         <ImageButton
@@ -78,7 +74,6 @@
             android:layout_toLeftOf="@+id/saveFile"
             android:layout_toStartOf="@+id/saveFile"
             android:background="@drawable/roll"
-            android:onClick=""
             android:scaleType="fitStart" />
 
         <ImageButton
@@ -88,7 +83,6 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/save"
             android:ems="1"
-            android:onClick=""
             android:scaleType="fitStart" />
 
 

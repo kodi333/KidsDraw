@@ -2,6 +2,7 @@ package jetsetapp.paint;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -11,6 +12,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.media.AudioManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton saveFileButton;
     private ImageButton addPictureButton;
     private ImageButton floodFillButton;
+    private ImageButton playMusicButton;
     private ImageView rectangle;
     private ImageButton[] btn = new ImageButton[7];
     private ImageButton btn_unfocus;
@@ -104,9 +107,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         addPictureButton.setOnClickListener(this);
 
         floodFillButton = findViewById(R.id.floodFill);
-
-
         floodFillButton.setOnClickListener(this);
+
+        playMusicButton = findViewById(R.id.playMusic);
+        playMusicButton.setOnClickListener(this);
 
         horizontalPaintsView = findViewById(R.id.HorizontalScroll);
         horizontalPaintsView.setHorizontalScrollBarEnabled(false);
@@ -198,13 +202,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.addPicture:
-                // Load ad
-                if (mInterstitialAd.isLoaded()) {
-                    mInterstitialAd.show();
-                    Log.d("Ads", "Ad loaded.");
-                } else {
-                    Log.d("TAG", "The interstitial wasn't loaded yet.");
-                }
+                Log.d("Ads", "Ad loaded.");
                 new LoadViewTask().execute();
                 setFocus(btn_unfocus, (ImageButton) findViewById(v.getId()));
                 break;
@@ -218,6 +216,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 setFocus(btn_unfocus, (ImageButton) findViewById(v.getId()));
                 fillFloodSelected = true;
                 canvasView.changeStroke(0);
+                break;
+
+            case R.id.playMusic:
+//                setFocus(btn_unfocus, (ImageButton) findViewById(v.getId()));
+
+                //check if music runs
+                AudioManager manager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+                if (manager.isMusicActive()) {
+                    Log.d("Music", "stop.");
+                    stopService(new Intent(this, MusicService.class));
+                } else {
+                    Log.d("Music", "started.");
+                    startService(new Intent(this, MusicService.class));
+                }
                 break;
         }
 

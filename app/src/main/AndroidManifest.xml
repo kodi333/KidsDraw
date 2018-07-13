@@ -53,6 +53,11 @@
             android:screenOrientation="portrait">
 
         </activity>
+
+        //Play Background Music Service
+
+        <service android:name=".MusicService" />
+
     </application>
 
 </manifest>
