@@ -23,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 
@@ -87,6 +88,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //my add unit id ca-app-pub-9459800474754936/7370566289
 
         //test ca-app-pub-3940256099942544/6300978111
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
+        mInterstitialAd.loadAd(new AdRequest.Builder()
+                .addTestDevice("D23C1744B90D70B0858576D6AE9B4C71") // I have added this one 05/06/2018
+                .build());
 
         canvasView = findViewById(R.id.canvas);
         canvasView.setDrawingCacheEnabled(true);
