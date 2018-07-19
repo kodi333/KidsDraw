@@ -6,16 +6,19 @@ import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
+import java.util.Random;
+
 public class MusicService extends Service {
 
     private MediaPlayer player;
-
-    //add here list with all songs and random chooser
+    private int[] playList = {R.raw.kids, R.raw.dreams, R.raw.forkids};
+    private int randomSong = 0;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 //        return super.onStartCommand(intent, flags, startId);
-        player = MediaPlayer.create(this, R.raw.kids);
+        randomSong = new Random().nextInt(3);
+        player = MediaPlayer.create(this, playList[randomSong]);
         player.setLooping(true);
         player.start();
         return START_STICKY;
