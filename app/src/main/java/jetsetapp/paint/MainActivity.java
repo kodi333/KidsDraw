@@ -78,11 +78,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return canvasView;
     }
 
+//    protected void onPause(){
+//        super.onPause();
+//
+//        AudioManager manager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+//        if (manager.isMusicActive()) {
+//            stopService(new Intent(this, MusicService.class));
+//        }
+//    }
+//
+//    protected void onStop(){
+//        super.onStop();
+//
+//        AudioManager manager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+//        if (manager.isMusicActive()) {
+//            stopService(new Intent(this, MusicService.class));
+//        }
+//    }
+
+
+    protected void onDestroy() {
+        super.onDestroy();
+
+        AudioManager manager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+        if (manager.isMusicActive()) {
+            stopService(new Intent(this, MusicService.class));
+        }
+    }
+
+//    protected void onPause(){
+//        super.onPause();
+//
+//        AudioManager manager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+//        if (manager.isMusicActive()) {
+//            stopService(new Intent(this, MusicService.class));
+//        }
+//    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         canvasView = findViewById(R.id.canvas);
         canvasView.setDrawingCacheEnabled(true);
