@@ -17,5 +17,6 @@
     <color name="colorTeal" type="color">#008080</color>
     <color name="colorNavy" type="color">#000080</color>
     <color name="colorFuchsia" type="color">#FF00FF</color>
+    <color name="colorWhite" type="color">#ffffff</color>
 
 </resources>

@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int unfocus_width;
     private GradientDrawable shapeDrawable;
     private InterstitialAd mInterstitialAd;
+    boolean isPressed = false;
 
     public static Bitmap getNewBitmap() {
         return newBitmap;
@@ -114,6 +115,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            stopService(new Intent(this, MusicService.class));
 //        }
 //    }
+//    @Override
+//    public void onBackPressed()
+//    {
+//
+//        finish();
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,11 +152,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         floodFillButton = findViewById(R.id.floodFill);
         floodFillButton.setOnClickListener(this);
 
-        playMusicButton = findViewById(R.id.playMusic);
-        playMusicButton.setOnClickListener(this);
-
         horizontalPaintsView = findViewById(R.id.HorizontalScroll);
         horizontalPaintsView.setHorizontalScrollBarEnabled(false);
+
+        playMusicButton = findViewById(R.id.playMusic);
+        playMusicButton.setOnClickListener(this);
 
         // Set background to all buttons
 
@@ -172,6 +179,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         shapeDrawable.setColor(Color.parseColor("#E6B0AA"));
 
     }
+
+    @Override
+    public void onBackPressed() {
+//            super.onBackPressed();
+        new LoadViewTask().execute();
+//        moveTaskToBack(true);
+
+    }
+
 
     private void setFocus(ImageButton btn_unfocus, ImageButton btn_focus) {
 
@@ -238,7 +254,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.addPicture:
-                Log.d("Ads", "Ad loaded.");
                 new LoadViewTask().execute();
                 setFocus(btn_unfocus, (ImageButton) findViewById(v.getId()));
                 break;
@@ -262,9 +277,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (manager.isMusicActive()) {
                     Log.d("Music", "stop.");
                     stopService(new Intent(this, MusicService.class));
+                    playMusicButton.setBackgroundResource(R.drawable.no_music);
                 } else {
                     Log.d("Music", "started.");
                     startService(new Intent(this, MusicService.class));
+                    playMusicButton.setBackgroundResource(R.drawable.music);
                 }
                 break;
         }

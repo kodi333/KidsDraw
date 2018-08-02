@@ -9,14 +9,15 @@ import android.util.Log;
 
 import static jetsetapp.paint.MusicManager.lastSong;
 
-public class MusicService extends Service {
+public class MusicService extends Service implements MediaPlayer.OnCompletionListener {
 
-    private MediaPlayer player;
-    private static int[] playList = {R.raw.kids, R.raw.dreams, R.raw.forkids};
-    Foreground.Listener myListener = new Foreground.Listener() {
+    private static MediaPlayer player;
+    static Foreground.Listener myListener = new Foreground.Listener() {
 
         public void onBecameForeground() {
-            player.start();
+            if (player != null) {
+                player.start();
+            }
 
         }
 
@@ -24,83 +25,59 @@ public class MusicService extends Service {
             player.pause();
         }
     };
-    private int currentSong;
+    private static int[] playList = {R.raw.ridehorse, R.raw.oldman_short, R.raw.dadyfinger};
 
-    public static int getPlayListLength() {
-        return playList.length;
-    }
+    public void onCreate() {
+        super.onCreate();
 
-//    protected void onPause() {
-//        if (player.isPlaying()) {
-//            player.pause();
-//        }
-//    }
-
-////    @Override
-//    protected void onResume() {
-//        if(player != null && !player.isPlaying())
-//            player.start();
-////        super.onResume();
-//    }
-//    ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
-//    // The first in the list of RunningTasks is always the foreground task.
-//    ActivityManager.RunningTaskInfo foregroundTaskInfo;
-//
-//    {
-//        foregroundTaskInfo = am.getRunningTasks(1).get(0);
-//    }
-
-    //    Random rand = new Random();
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-//        return super.onStartCommand(intent, flags, startId);
-        // below is to avoid playing of same song twice
-//        currentSong = rand.nextInt(3);
-//        int lastSong = musicManager.getLastSong();
-
-
-        Log.d("getLastSong ", String.valueOf(lastSong));
-        Log.d("getCurrentSong ", String.valueOf(currentSong));
-
-        //to play all songs in order
-//        lastSong = playList.length;
         lastSong++;
 
         currentSong = (lastSong % 3);
         Log.d("currentSong ", String.valueOf(lastSong % 3));
 
         player = MediaPlayer.create(this, playList[currentSong]);
-        player.setLooping(true);
+        player.setOnCompletionListener(this);
+
+        Foreground.get(getApplication()).addListener(myListener);
+
+    }
+
+
+    private int currentSong;
+
+    public static int getPlayListLength() {
+        return playList.length;
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        //to play all songs in order
+
         player.start();
 
-
-//        Log.d("getCurrrentSong", String.valueOf(currentSong));
-//        musicManager.setLastSong(currentSong);
         return START_STICKY;
     }
 
-    public void onCreate() {
-        super.onCreate();
-        Foreground.get(getApplication()).addListener(myListener);
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+
+        lastSong++;
+        currentSong = (lastSong % 3);
+
+        player = MediaPlayer.create(this, playList[currentSong]);
+        player.setOnCompletionListener(this);
+        player.start();
+
     }
 
 
-//    @Override
-//    public void onTrimMemory(final int level) {
-//        if (level == ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) {
-//            if(player != null){
-//                player.pause();
-//            }
-//        }
-//    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         Foreground.get(this).removeListener(myListener);
-//        player.release();
         player.stop();
-//        player.release();
+        player.release();
     }
 
 

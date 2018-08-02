@@ -29,21 +29,9 @@ public class CatGallery extends AppCompatActivity implements View.OnClickListene
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cat_gallery);
-
-//        final AudioManager manager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
-
-
-        Log.d("Music", String.valueOf(musicAlreadyPlayedAtBegining));
-
-        AudioManager manager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
-        if (!manager.isMusicActive() && !musicAlreadyPlayedAtBegining) {
-            Log.d("Music", "started.");
-            startService(new Intent(this, MusicService.class));
-            musicAlreadyPlayedAtBegining = true;
-        }
-
 
         dogs = findViewById(R.id.dogs);
         cats = findViewById(R.id.cats);
@@ -52,6 +40,17 @@ public class CatGallery extends AppCompatActivity implements View.OnClickListene
         dogs.setOnClickListener(this);
         cats.setOnClickListener(this);
         other.setOnClickListener(this);
+
+        Intent musicService = new Intent(this, MusicService.class);
+
+        AudioManager manager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+        if (!manager.isMusicActive() && !musicAlreadyPlayedAtBegining) {
+            Log.d("Music", "started.");
+            startService(musicService);
+            Foreground.get(getApplication()).addListener(MusicService.myListener);
+
+            musicAlreadyPlayedAtBegining = true;
+        }
 
     }
 
@@ -88,6 +87,19 @@ public class CatGallery extends AppCompatActivity implements View.OnClickListene
 
         startActivity(mainActivity);
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopService(new Intent(this, MusicService.class));
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+// super.onBackPressed();
     }
 
 //        protected void onPause(){
